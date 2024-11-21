@@ -27,6 +27,7 @@ Text: Measure Names
 -------------------------------------------------------
 
 Formulas
+
 Running Sum of Losses: RUNNING_SUM(SUM([Deriv Incur Loss Amt Xcat])
 Running Sum of EPAPR: RUNNING_SUM(SUM([EPAPR]))
 Running Loss Ratio: ROUND([Running Sum of Losses] / [Running Sum of EPAPR], 3)

@@ -1,0 +1,39 @@
+Cumulative Loss Ratio Graph
+
+Search Bar: EM_DATE Monthly, UW_RATING, RUNNING_LOSS_RATIO_DT
+X-axis: Monthly Month(EM_DATE)
+Y-axis: RUNNING_LOSS_RATIO_DT
+Slice with color: UW_RATING
+Settings >> Display: All Labels, Fit to Screen, Data Markers, Y-axis gridlines
+
+-------------------------------------------------------
+
+Losses & Premiums Pivot Table
+
+Search Bar: RUNNING_LOSS_AMT_DT, RUNNING_EPAPR_DT, RUNNING LOSS_RATIO_DT, by UW Rating, EM_DATE, sort by EM_DATE, sort by UW Rating
+Rows: EM_DATE aka Month/Year
+Values: RUNNING LOSS_AMT_DT aka Inc Losses, RUNNING_EPAPR_DT aka EPAPR, RUNNING_LOSS_RATIO_DT aka LR
+Columns: UW Rating
+
+-------------------------------------------------------
+
+Policy and Claim Counts Pivot Table
+
+Search Bar: count Pol Id, Incur Clm Cnt Xcat, Glass Tow Incur Clm Cnt, by UW Rating, EM_DATE, sort by EM_DATE, sort by UW Rating
+Rows: EM_DATE aka Month/Year
+Values: count Pol Id aka Policies, Incur Clm Cnt Xcat aka Claims, Glass Tow Incur Clm Cnt aka Glass
+Columns: UW Rating
+
+-------------------------------------------------------
+
+Formulas
+
+UW_RATING: if (Derived Yes No Flag = 'yes acc/viol/comp') then 'uw dirty' else 'uw clean'
+EM_DATE: to_date (Earned Month, 'YYYYMM') 
+RUNNING_LOSS_AMT_DT: cumulative_sum(Deriv Incur Loss Amt Xcat , EM_DATE )
+RUNNING_EPAPR_DT: cumulative_sum(Epapr, EM_DATE)
+RUNNING_LOSS_RATIO_DT: RUNNING_LOSS_AMT_DT / RUNNING_EPAPR_DT 
+
+-------------------------------------------------------
+
+Dashboard Filters: Risk State Abbr, Clean Dirty Cd, Derived Yes No Flag
