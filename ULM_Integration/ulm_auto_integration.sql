@@ -21,7 +21,7 @@ CASE WHEN COV_TYPE_ABBR = 'PD'
     THEN EE_PERCENT * ADJ_PD_PP_PRED ELSE 0 END AS ADJ_PD_PP,                   -- Adjusted PD Pure Premium (fraction of total PD PP)
 CASE WHEN COV_TYPE_ABBR = 'PIP'     
     THEN EE_PERCENT * ADJ_PIP_PP_PRED ELSE 0 END AS ADJ_PIP_PP,                 -- Adjusted PIP Pure Premium (fraction of total PIP PP)
-CASE WHEN COV_TYPE_ABBR = 'UM'      
+CASE WHEN COV_TYPE_ABBR = 'UMBI'      
     THEN EE_PERCENT * ADJ_UM_PP_PRED ELSE 0 END AS ADJ_UM_PP,                   -- Adjusted UM Pure Premium (fraction of total UM PP)
 (ADJ_BI_PP + ADJ_COLL_PP + ADJ_COMP_PP + ADJ_MP_PP + ADJ_PD_PP + ADJ_PIP_PP + ADJ_UM_PP) AS ADJ_TTL_PP, -- Adjusted TTL Pure Premium (fraction of total PP)
 ULM_AUTO.ADJ_BI_PP_PRED,                    -- Used for testing BI Pure Premium value
@@ -113,7 +113,7 @@ CASE WHEN COV_TYPE_ABBR = 'PD'
     THEN EE_PERCENT * ADJ_PD_PP_PRED ELSE 0 END AS ADJ_PD_CTE,                   
 CASE WHEN COV_TYPE_ABBR = 'PIP'     
     THEN EE_PERCENT * ADJ_PIP_PP_PRED ELSE 0 END AS ADJ_PIP_CTE,                
-CASE WHEN COV_TYPE_ABBR = 'UM'      
+CASE WHEN COV_TYPE_ABBR = 'UMBI'      
     THEN EE_PERCENT * ADJ_UM_PP_PRED ELSE 0 END AS ADJ_UM_CTE,                
 (ADJ_BI_CTE + ADJ_COLL_CTE + ADJ_COMP_CTE + ADJ_MP_CTE + ADJ_PD_CTE + ADJ_PIP_CTE + ADJ_UM_CTE) AS ADJ_TTL_CTE
 FROM "DSC_PLBI_DB"."APP_AUTO_PRD"."AUTO_OPERATIONAL_LOSS" AS AUTO_OP_LOSS

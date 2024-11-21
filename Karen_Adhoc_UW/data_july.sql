@@ -32,7 +32,7 @@ SUM(AUTO_OP_LOSS.GLASS_TOW_INCUR_CLM_CNT) AS GLASS_TOW_INCUR_CLM_CNT,
 SUM(AUTO_OP_LOSS.GLASS_TOW_INCUR_LOSS_AMT) AS GLASS_TOW_INCUR_LOSS_AMT,
 
 SUM(AUTO_OP_LOSS.DERIV_ADJ_EP_AMT) AS EP,                    -- Earned Premium
--- SUM(AUTO_OP_LOSS.RERATED_EP_EPAPR_AMT) AS EPAPR,             -- Earned Premium At Present Rates
+SUM(AUTO_OP_LOSS.RERATED_EP_EPAPR_AMT) AS EPAPR,             -- Earned Premium At Present Rates
 DAY(LAST_DAY(TO_DATE(EARNED_MONTH || '01', 'YYYYMMDD'))) /   -- Calculates # of days in Month
 IFF(MOD(SUBSTR('202407', 1, 4), 4) = 0 AND (MOD(SUBSTR('202407', 1, 4), 100) != 0 OR MOD(SUBSTR('202407', 1, 4), 400) = 0), 366, 365) -- Calculates # of days in years
 AS EE                                                        -- Earned Exposure calculation
