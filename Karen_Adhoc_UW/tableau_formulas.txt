@@ -1,0 +1,33 @@
+Cumulative Loss Ratio Graph
+
+Columns: MONTH(Earned Month Date)
+Rows: Running Loss Ratio
+Filters: Risk State Abbr, Clean Dirty Cd, UW
+Color: UW
+Text: Running Loss Ratio and CNT(DATA_JULY)
+
+-------------------------------------------------------
+
+Losses & Premiums Chart
+
+Columns: Measure Names (Running Losses, Running EPAPR, Running Loss Ratio), UW
+Rows: MONTH(Earned Month Date)
+Filters: Clean Dirty Cd, Risk State Abbr, UW, Measure Names?
+Text: Measure Names
+
+-------------------------------------------------------
+
+Policy and Claim Counts Chart
+
+Columns: Measure Names (CNT(DATA_JULY), SUM(Incurred Claim Count), SUM(Incurred Glass Count)), UW
+Rows: MONTH(Earned Month Date)
+Filters: Clean Dirty Cd, Risk State Abbr, UW, Measure Names?
+Text: Measure Names
+
+-------------------------------------------------------
+
+Formulas
+Running Sum of Losses: RUNNING_SUM(SUM([Deriv Incur Loss Amt Xcat])
+Running Sum of EPAPR: RUNNING_SUM(SUM([EPAPR]))
+Running Loss Ratio: ROUND([Running Sum of Losses] / [Running Sum of EPAPR], 3)
+Earned Month Date: DATEPARSE("yyyyMM", [Earned Month])
