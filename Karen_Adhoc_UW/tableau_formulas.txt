@@ -26,9 +26,27 @@ Text: Measure Names
 
 -------------------------------------------------------
 
+Loss Ratio Relativities
+
+Columns: UW
+Filters: Risk State Abbr, Clean Dirty Cd, UW
+Color: UW
+Text: ATTR(LRR)
+
+-------------------------------------------------------
+
 Formulas
 
 Running Sum of Losses: RUNNING_SUM(SUM([Deriv Incur Loss Amt Xcat])
 Running Sum of EPAPR: RUNNING_SUM(SUM([EPAPR]))
 Running Loss Ratio: ROUND([Running Sum of Losses] / [Running Sum of EPAPR], 3)
 Earned Month Date: DATEPARSE("yyyyMM", [Earned Month])
+State Loss Ratio: 
+{ FIXED [Risk St Abbr], [Clean Dirty Cd]: SUM([Deriv Incur Loss Amt Xcat])} / 
+{ FIXED [Risk St Abbr], [Clean Dirty Cd]: SUM([EPAPR])}
+
+Segment Loss Ratio:
+{ FIXED [Risk St Abbr], [Clean Dirty Cd], [UW]: SUM([Deriv Incur Loss Amt Xcat])} / 
+{ FIXED [Risk St Abbr], [Clean Dirty Cd], [UW]: SUM([EPAPR])}
+
+LRR: [Segment Level Loss Ratio] / [State Loss Ratio]
