@@ -93,6 +93,8 @@ FROM
 SELECT * FROM USER_DB.AD1_PA08042.TED_DATA
 DROP TABLE USER_DB.AD1_PA08042.TED_DATA
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 INSERT INTO USER_DB.AD1_PA08042.ACCT_CR_DISCREPANCIES
 SELECT 'Auto' AS POL_START, TED.*, 'Home' AS POL_END
 FROM (
