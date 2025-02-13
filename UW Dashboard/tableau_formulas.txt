@@ -92,5 +92,15 @@ END
 
 POL TYPE LRR: [POL TYPE Segment] / [POL TYPE State]
 
+EPAPR Pulse Check:
+IF [Business Type] = 'NB' THEN
+  SUM(IF [POL_TYPE] = 'NB' THEN [Epapr] END) /
+  TOTAL(SUM(IF [POL_TYPE] = 'NB' THEN [Epapr] END))
+ELSEIF [Business Type] = 'Renewal' THEN
+  SUM(IF [POL_TYPE] = 'Renewal' THEN [Epapr] END) /
+  TOTAL(SUM(IF [POL_TYPE] = 'Renewal' THEN [Epapr] END))
+ELSE
+  SUM([Epapr]) / TOTAL(SUM([Epapr]))
+END
 
 Dashboard: Parameter Action --> POL_TYPE Parameter Action --> All Sheets --> Target Parameter is Business Type
