@@ -3,26 +3,26 @@ SELECT
 POL_ID,                     -- Grain Level #1: Policy ID
 POL_PRD_ID,                 -- Grain Level #2: Policy Period ID 
 COV_TYPE_ABBR,              -- Grain Level #3: Coverage Type
-EARNED_MONTH,               -- Earned Month Column for Readability
+EARNED_MONTH,               -- Grain Level #4: Earned Month
 DERIV_ADJ_EP_EXPSR_MO_CNT,  -- Shows EE for a given row in Op Loss
 SUM(DERIV_ADJ_EP_EXPSR_MO_CNT) OVER (PARTITION BY POL_ID, POL_PRD_ID, COV_TYPE_ABBR) AS TTL_COV_EE, -- Total EE for a given policy period id and cov type
 -- Calculates EE of a given row as a percentage, which will be used to adjust ULM scores to a finer grain
 DERIV_ADJ_EP_EXPSR_MO_CNT / NULLIFZERO(SUM(DERIV_ADJ_EP_EXPSR_MO_CNT) OVER (PARTITION BY POL_ID, POL_PRD_ID, COV_TYPE_ABBR)) AS EE_PERCENT,
 -- Mapping for breaking down ULM metrics by coverage for a particular policy period id
 CASE WHEN COV_TYPE_ABBR = 'BI'      
-    THEN EE_PERCENT * ADJ_BI_PP_PRED ELSE 0 END AS ADJ_BI_PP,                   -- Adjusted BI Pure Premium (fraction of total BI PP)
+    THEN EE_PERCENT * ADJ_BI_PP_PRED * BI_EXPOSURE ELSE 0 END AS ADJ_BI_PP,                     -- Adjusted BI Pure Premium (fraction of total BI PP)
 CASE WHEN COV_TYPE_ABBR = 'COLL'    
-    THEN EE_PERCENT * ADJ_COLL_PP_PRED ELSE 0 END AS ADJ_COLL_PP,               -- Adjusted COLL Pure Premium (fraction of total COLL PP)
+    THEN EE_PERCENT * ADJ_COLL_PP_PRED * COLL_EXPOSURE ELSE 0 END AS ADJ_COLL_PP,               -- Adjusted COLL Pure Premium (fraction of total COLL PP)
 CASE WHEN COV_TYPE_ABBR = 'COMP'    
-    THEN EE_PERCENT * ADJ_COMP_PP_PRED ELSE 0 END AS ADJ_COMP_PP,               -- Adjusted COMP Pure Premium (fraction of total COMP PP)
+    THEN EE_PERCENT * ADJ_COMP_PP_PRED * COMP_EXPOSURE ELSE 0 END AS ADJ_COMP_PP,               -- Adjusted COMP Pure Premium (fraction of total COMP PP)
 CASE WHEN COV_TYPE_ABBR = 'MED'     
-    THEN EE_PERCENT * ADJ_MP_PP_PRED ELSE 0 END AS ADJ_MP_PP,                   -- Adjusted MED Pure Premium (fraction of total MED PP)
+    THEN EE_PERCENT * ADJ_MP_PP_PRED * MP_EXPOSURE ELSE 0 END AS ADJ_MP_PP,                     -- Adjusted MED Pure Premium (fraction of total MED PP)
 CASE WHEN COV_TYPE_ABBR = 'PD'      
-    THEN EE_PERCENT * ADJ_PD_PP_PRED ELSE 0 END AS ADJ_PD_PP,                   -- Adjusted PD Pure Premium (fraction of total PD PP)
+    THEN EE_PERCENT * ADJ_PD_PP_PRED * PD_EXPOSURE ELSE 0 END AS ADJ_PD_PP,                     -- Adjusted PD Pure Premium (fraction of total PD PP)
 CASE WHEN COV_TYPE_ABBR = 'PIP'     
-    THEN EE_PERCENT * ADJ_PIP_PP_PRED ELSE 0 END AS ADJ_PIP_PP,                 -- Adjusted PIP Pure Premium (fraction of total PIP PP)
+    THEN EE_PERCENT * ADJ_PIP_PP_PRED * PIP_EXPOSURE ELSE 0 END AS ADJ_PIP_PP,                  -- Adjusted PIP Pure Premium (fraction of total PIP PP)
 CASE WHEN COV_TYPE_ABBR = 'UMBI'      
-    THEN EE_PERCENT * ADJ_UM_PP_PRED ELSE 0 END AS ADJ_UM_PP,                   -- Adjusted UM Pure Premium (fraction of total UM PP)
+    THEN EE_PERCENT * ADJ_UM_PP_PRED * UM_EXPOSURE ELSE 0 END AS ADJ_UM_PP,                     -- Adjusted UM Pure Premium (fraction of total UM PP)
 (ADJ_BI_PP + ADJ_COLL_PP + ADJ_COMP_PP + ADJ_MP_PP + ADJ_PD_PP + ADJ_PIP_PP + ADJ_UM_PP) AS ADJ_TTL_PP, -- Adjusted TTL Pure Premium (fraction of total PP)
 ULM_AUTO.ADJ_BI_PP_PRED,                    -- Used for testing BI Pure Premium value
 ULM_AUTO.ADJ_COLL_PP_PRED,                  -- Used for testing COLL Pure Premium value
@@ -102,19 +102,19 @@ SUM(DERIV_ADJ_EP_EXPSR_MO_CNT) OVER (PARTITION BY POL_ID, POL_PRD_ID, COV_TYPE_A
 DERIV_ADJ_EP_EXPSR_MO_CNT / NULLIFZERO(SUM(DERIV_ADJ_EP_EXPSR_MO_CNT) OVER (PARTITION BY POL_ID, POL_PRD_ID, COV_TYPE_ABBR)) AS EE_PERCENT,
 -- Mapping for breaking down ULM metrics by coverage for a particular policy period id
 CASE WHEN COV_TYPE_ABBR = 'BI'      
-    THEN EE_PERCENT * ADJ_BI_PP_PRED ELSE 0 END AS ADJ_BI_CTE,
+    THEN EE_PERCENT * ADJ_BI_PP_PRED * BI_EXPOSURE ELSE 0 END AS ADJ_BI_CTE,
 CASE WHEN COV_TYPE_ABBR = 'COLL'    
-    THEN EE_PERCENT * ADJ_COLL_PP_PRED ELSE 0 END AS ADJ_COLL_CTE,
+    THEN EE_PERCENT * ADJ_COLL_PP_PRED * COLL_EXPOSURE ELSE 0 END AS ADJ_COLL_CTE,
 CASE WHEN COV_TYPE_ABBR = 'COMP'    
-    THEN EE_PERCENT * ADJ_COMP_PP_PRED ELSE 0 END AS ADJ_COMP_CTE,             
+    THEN EE_PERCENT * ADJ_COMP_PP_PRED * COMP_EXPOSURE ELSE 0 END AS ADJ_COMP_CTE,             
 CASE WHEN COV_TYPE_ABBR = 'MED'     
-    THEN EE_PERCENT * ADJ_MP_PP_PRED ELSE 0 END AS ADJ_MP_CTE,                 
+    THEN EE_PERCENT * ADJ_MP_PP_PRED * MP_EXPOSURE ELSE 0 END AS ADJ_MP_CTE,                 
 CASE WHEN COV_TYPE_ABBR = 'PD'      
-    THEN EE_PERCENT * ADJ_PD_PP_PRED ELSE 0 END AS ADJ_PD_CTE,                   
+    THEN EE_PERCENT * ADJ_PD_PP_PRED * PD_EXPOSURE ELSE 0 END AS ADJ_PD_CTE,                   
 CASE WHEN COV_TYPE_ABBR = 'PIP'     
-    THEN EE_PERCENT * ADJ_PIP_PP_PRED ELSE 0 END AS ADJ_PIP_CTE,                
+    THEN EE_PERCENT * ADJ_PIP_PP_PRED * PIP_EXPOSURE ELSE 0 END AS ADJ_PIP_CTE,                
 CASE WHEN COV_TYPE_ABBR = 'UMBI'      
-    THEN EE_PERCENT * ADJ_UM_PP_PRED ELSE 0 END AS ADJ_UM_CTE,                
+    THEN EE_PERCENT * ADJ_UM_PP_PRED * UM_EXPOSURE ELSE 0 END AS ADJ_UM_CTE,                
 (ADJ_BI_CTE + ADJ_COLL_CTE + ADJ_COMP_CTE + ADJ_MP_CTE + ADJ_PD_CTE + ADJ_PIP_CTE + ADJ_UM_CTE) AS ADJ_TTL_CTE
 FROM "DSC_PLBI_DB"."APP_AUTO_PRD"."AUTO_OPERATIONAL_LOSS" AS AUTO_OP_LOSS
 JOIN "DSC_PLDS_DB"."APP_AUTOMATA_PRD"."PREVAIL_AUTO_ULM_POL_PRD_AGG_VW" AS ULM_AUTO
