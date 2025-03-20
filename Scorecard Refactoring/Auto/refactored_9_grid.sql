@@ -99,24 +99,3 @@ FROM
 )
 GROUP BY KEY
 ORDER BY KEY
-
--- Comparison Query
-WITH orig AS (
-    SELECT * FROM TABLE(RESULT_SCAN('01bb1867-0513-065d-005a-dd03451c38c3'))
-),
-
--- Retrieve results of the second query
-refactored AS (
-    SELECT * FROM TABLE(RESULT_SCAN('01bb186d-0513-062b-005a-dd03451ebfef'))
-)
-
--- Compare the results
-SELECT *
-FROM orig
-FULL OUTER JOIN refactored
-ON orig.KEY = refactored.KEY
-AND orig."90Day" = refactored."90Day"
-AND orig.AS_OF = refactored.AS_OF
-WHERE orig.KEY IS NULL OR refactored.KEY IS NULL
-OR orig."90Day" IS NULL OR refactored."90Day" IS NULL
-OR orig.AS_OF IS NULL OR refactored.AS_OF IS NULL;
