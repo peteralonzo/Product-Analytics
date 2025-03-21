@@ -1,0 +1,66 @@
+-- Test Query
+WITH orig AS 
+(
+    SELECT * FROM TABLE(RESULT_SCAN('01bb2987-0513-276f-005a-dd034a249727'))
+),
+
+refactored AS 
+(
+    SELECT * FROM TABLE(RESULT_SCAN('01bb2987-0513-276f-005a-dd034a249727'))
+)
+
+-- Compare the results
+SELECT * FROM orig
+UNION
+SELECT * FROM refactored
+
+-- All Functions
+-- Used for RC1
+CREATE OR REPLACE FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.rc1_funnel_scorecard(month_diff INT, QUOTE_DT DATE, QCN STRING)
+RETURNS NUMBER(13, 0)
+LANGUAGE SQL
+AS
+$$
+    SUM(CASE WHEN DATEDIFF(MONTH, QUOTE_DT, SYSDATE()) = month_diff AND LENGTH(QCN) > 5 THEN 1 ELSE 0 END)
+$$;
+
+-- Used for Success 2+
+CREATE OR REPLACE FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.adv_ind_funnel_scorecard(month_diff INT, QUOTE_DT DATE, SUCCESS_IND INT, CARRIERSQUOTED INT)
+RETURNS NUMBER(13, 0)
+LANGUAGE SQL
+AS
+$$
+    SUM(CASE WHEN DATEDIFF(MONTH, QUOTE_DT, SYSDATE()) = month_diff AND CARRIERSQUOTED > 2 THEN ROUND(SUCCESS_IND, 0) ELSE 0 END)
+$$;
+
+-- Used for Failure, Success, Competitive, Win, Completed Quote, Issue, AND Bridge
+CREATE OR REPLACE FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.ind_funnel_scorecard(month_diff INT, QUOTE_DT DATE, IND INT)
+RETURNS NUMBER(13, 0)
+LANGUAGE SQL
+AS
+$$
+    SUM(CASE WHEN DATEDIFF(MONTH, QUOTE_DT, SYSDATE()) = month_diff THEN ROUND(IND, 0) ELSE 0 END)
+$$;
+
+-- Region function
+CREATE OR REPLACE FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.get_region_scorecard(STATE STRING)
+RETURNS STRING
+LANGUAGE SQL
+AS
+$$
+    CASE WHEN STATE IN ('MS','TN','AL','AR','FL','IN','KY','NC','WV','GA','SC','DC','LA') THEN 'Southeast' 
+         WHEN STATE IN ('IA','KS','NE','OK','TX','MO','IL','MI','MN','WI','NM','CO') THEN 'Central'
+         WHEN STATE IN ('DE','ME','NH','RI','VT','NY','NJ','CT','MA','PA','OH','VA','MD') THEN 'Northeast'
+         WHEN STATE IN ('AK','HI','MT','ND','SD','WY','CA','AZ','NV','WA','OR','ID','UT') THEN 'West' 
+    ELSE 'Unknown' END
+$$;
+
+-- Used for division in Query #6
+CREATE OR REPLACE FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.div_ind_funnel_scorecard(month_diff INT, QUOTE_DT DATE, SUCCESS_IND INT, CARRIERSQUOTED INT, XHIG NUMBER, ANNUAL NUMBER)
+RETURNS NUMBER(13, 0)
+LANGUAGE SQL
+AS
+$$
+    CASE WHEN DATEDIFF(MONTH, QUOTE_DT, SYSDATE()) = month_diff AND SUCCESS_IND = 1 AND CARRIERSQUOTED > 2
+    THEN NULLIFZERO(ANNUAL/XHIG) ELSE NULL END
+$$;

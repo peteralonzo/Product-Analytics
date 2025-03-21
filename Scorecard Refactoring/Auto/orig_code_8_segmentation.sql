@@ -304,22 +304,3 @@ from  "DSC_PLBI_DB"."APP_AUTO_PRD"."AUTO_INFORCE_MONTHEND" t1
 
  Where BUS_UNIT_ABBR = 'AARP' and LATEST_MONTH_IND = 'Y' and RATE_PLAN_CD = 'HDC1' Group by Key)
 order by key
-
--- Comparison Query
-WITH orig AS (
-    SELECT * FROM TABLE(RESULT_SCAN('01bb1cdb-0512-fb9b-005a-dd0346c2c33b'))
-),
-
--- Retrieve results of the second query
-refactored AS (
-    SELECT * FROM TABLE(RESULT_SCAN('01bb1cda-0513-085d-005a-dd0346c298f7'))
-)
-
--- Compare the results
-SELECT *
-FROM orig
-FULL OUTER JOIN refactored
-ON orig.KEY = refactored.KEY
-AND orig.PIF = refactored.PIF
-WHERE orig.KEY IS NULL OR refactored.KEY IS NULL
-OR orig.PIF IS NULL OR refactored.PIF IS NULL;

@@ -326,310 +326,310 @@ case when  STATE_ABBR in ('IA') and left(STATE_ABBR,2)=right(GARAGE_SUBSTATE,2) 
 order by Key;
 
 
--- Comparison Query
-WITH orig AS (
-    SELECT * FROM TABLE(RESULT_SCAN('01bb2347-0513-0c06-005a-dd0348d15753')) -- Original Code
-),
+-- -- Comparison Query
+-- WITH orig AS (
+--     SELECT * FROM TABLE(RESULT_SCAN('01bb2347-0513-0c06-005a-dd0348d15753')) -- Original Code
+-- ),
 
--- Retrieve results of the second query
-refactored AS (
-    SELECT * FROM TABLE(RESULT_SCAN('01bb2348-0513-0ea4-005a-dd0348d1b633')) -- Refactored Code
-)
+-- -- Retrieve results of the second query
+-- refactored AS (
+--     SELECT * FROM TABLE(RESULT_SCAN('01bb2348-0513-0ea4-005a-dd0348d1b633')) -- Refactored Code
+-- )
 
--- SELECT * FROM orig WHERE KEY IS NULL
--- UNION ALL
--- SELECT * FROM refactored WHERE KEY IS NULL
+-- -- SELECT * FROM orig WHERE KEY IS NULL
+-- -- UNION ALL
+-- -- SELECT * FROM refactored WHERE KEY IS NULL
 
--- Compare the results
-SELECT *
-FROM orig
-FULL OUTER JOIN refactored
-ON orig.KEY = refactored.KEY
-AND orig."14 RC1" = refactored."14 RC1"
-AND orig."13 RC1" = refactored."13 RC1"
-AND orig."12 RC1" = refactored."12 RC1"
-AND orig."11 RC1" = refactored."11 RC1"
-AND orig."10 RC1" = refactored."10 RC1"
-AND orig." 9 RC1" = refactored." 9 RC1"
-AND orig." 8 RC1" = refactored." 8 RC1"
-AND orig." 7 RC1" = refactored." 7 RC1"
-AND orig." 6 RC1" = refactored." 6 RC1"
-AND orig." 5 RC1" = refactored." 5 RC1"
-AND orig." 4 RC1" = refactored." 4 RC1"
-AND orig." 3 RC1" = refactored." 3 RC1"
-AND orig." 2 RC1" = refactored." 2 RC1"
-AND orig."14 FAIL" = refactored."14 FAIL"
-AND orig."13 FAIL" = refactored."13 FAIL"
-AND orig."12 FAIL" = refactored."12 FAIL"
-AND orig."11 FAIL" = refactored."11 FAIL"
-AND orig."10 FAIL" = refactored."10 FAIL"
-AND orig."9 FAIL" = refactored."9 FAIL"
-AND orig."8 FAIL" = refactored."8 FAIL"
-AND orig."7 FAIL" = refactored."7 FAIL"
-AND orig."6 FAIL" = refactored."6 FAIL"
-AND orig."5 FAIL" = refactored."5 FAIL"
-AND orig."4 FAIL" = refactored."4 FAIL"
-AND orig."3 FAIL" = refactored."3 FAIL"
-AND orig."2 FAIL" = refactored."2 FAIL"
-AND orig."14 SUCCESS" = refactored."14 SUCCESS"
-AND orig."13 SUCCESS" = refactored."13 SUCCESS"
-AND orig."12 SUCCESS" = refactored."12 SUCCESS"
-AND orig."11 SUCCESS" = refactored."11 SUCCESS"
-AND orig."10 SUCCESS" = refactored."10 SUCCESS"
-AND orig."9 SUCCESS" = refactored."9 SUCCESS"
-AND orig."8 SUCCESS" = refactored."8 SUCCESS"
-AND orig."7 SUCCESS" = refactored."7 SUCCESS"
-AND orig."6 SUCCESS" = refactored."6 SUCCESS"
-AND orig."5 SUCCESS" = refactored."5 SUCCESS"
-AND orig."4 SUCCESS" = refactored."4 SUCCESS"
-AND orig."3 SUCCESS" = refactored."3 SUCCESS"
-AND orig."2 SUCCESS" = refactored."2 SUCCESS"
-AND orig."14 SUCCESS_2+" = refactored."14 SUCCESS_2+"
-AND orig."13 SUCCESS_2+" = refactored."13 SUCCESS_2+"
-AND orig."12 SUCCESS_2+" = refactored."12 SUCCESS_2+"
-AND orig."11 SUCCESS_2+" = refactored."11 SUCCESS_2+"
-AND orig."10 SUCCESS_2+" = refactored."10 SUCCESS_2+"
-AND orig."9 SUCCESS_2+" = refactored."9 SUCCESS_2+"
-AND orig."8 SUCCESS_2+" = refactored."8 SUCCESS_2+"
-AND orig."7 SUCCESS_2+" = refactored."7 SUCCESS_2+"
-AND orig."6 SUCCESS_2+" = refactored."6 SUCCESS_2+"
-AND orig."5 SUCCESS_2+" = refactored."5 SUCCESS_2+"
-AND orig."4 SUCCESS_2+" = refactored."4 SUCCESS_2+"
-AND orig."3 SUCCESS_2+" = refactored."3 SUCCESS_2+"
-AND orig."2 SUCCESS_2+" = refactored."2 SUCCESS_2+"
-AND orig."14 COMPETITIVE" = refactored."14 COMPETITIVE"
-AND orig."13 COMPETITIVE" = refactored."13 COMPETITIVE"
-AND orig."12 COMPETITIVE" = refactored."12 COMPETITIVE"
-AND orig."11 COMPETITIVE" = refactored."11 COMPETITIVE"
-AND orig."10 COMPETITIVE" = refactored."10 COMPETITIVE"
-AND orig."9 COMPETITIVE" = refactored."9 COMPETITIVE"
-AND orig."8 COMPETITIVE" = refactored."8 COMPETITIVE"
-AND orig."7 COMPETITIVE" = refactored."7 COMPETITIVE"
-AND orig."6 COMPETITIVE" = refactored."6 COMPETITIVE"
-AND orig."5 COMPETITIVE" = refactored."5 COMPETITIVE"
-AND orig."4 COMPETITIVE" = refactored."4 COMPETITIVE"
-AND orig."3 COMPETITIVE" = refactored."3 COMPETITIVE"
-AND orig."2 COMPETITIVE" = refactored."2 COMPETITIVE"
-AND orig."14 WIN" = refactored."14 WIN"
-AND orig."13 WIN" = refactored."13 WIN"
-AND orig."12 WIN" = refactored."12 WIN"
-AND orig."11 WIN" = refactored."11 WIN"
-AND orig."10 WIN" = refactored."10 WIN"
-AND orig."9 WIN" = refactored."9 WIN"
-AND orig."8 WIN" = refactored."8 WIN"
-AND orig."7 WIN" = refactored."7 WIN"
-AND orig."6 WIN" = refactored."6 WIN"
-AND orig."5 WIN" = refactored."5 WIN"
-AND orig."4 WIN" = refactored."4 WIN"
-AND orig."3 WIN" = refactored."3 WIN"
-AND orig."2 WIN" = refactored."2 WIN"
-AND orig."14 CQ" = refactored."14 CQ"
-AND orig."13 CQ" = refactored."13 CQ"
-AND orig."12 CQ" = refactored."12 CQ"
-AND orig."11 CQ" = refactored."11 CQ"
-AND orig."10 CQ" = refactored."10 CQ"
-AND orig."9 CQ" = refactored."9 CQ"
-AND orig."8 CQ" = refactored."8 CQ"
-AND orig."7 CQ" = refactored."7 CQ"
-AND orig."6 CQ" = refactored."6 CQ"
-AND orig."5 CQ" = refactored."5 CQ"
-AND orig."4 CQ" = refactored."4 CQ"
-AND orig."3 CQ" = refactored."3 CQ"
-AND orig."2 CQ" = refactored."2 CQ"
-AND orig."14 ISSUE" = refactored."14 ISSUE"
-AND orig."13 ISSUE" = refactored."13 ISSUE"
-AND orig."12 ISSUE" = refactored."12 ISSUE"
-AND orig."11 ISSUE" = refactored."11 ISSUE"
-AND orig."10 ISSUE" = refactored."10 ISSUE"
-AND orig."9 ISSUE" = refactored."9 ISSUE"
-AND orig."8 ISSUE" = refactored."8 ISSUE"
-AND orig."7 ISSUE" = refactored."7 ISSUE"
-AND orig."6 ISSUE" = refactored."6 ISSUE"
-AND orig."5 ISSUE" = refactored."5 ISSUE"
-AND orig."4 ISSUE" = refactored."4 ISSUE"
-AND orig."3 ISSUE" = refactored."3 ISSUE"
-AND orig."2 ISSUE" = refactored."2 ISSUE"
-AND orig."14 BRIDGE" = refactored."14 BRIDGE"
-AND orig."13 BRIDGE" = refactored."13 BRIDGE"
-AND orig."12 BRIDGE" = refactored."12 BRIDGE"
-AND orig."11 BRIDGE" = refactored."11 BRIDGE"
-AND orig."10 BRIDGE" = refactored."10 BRIDGE"
-AND orig."9 BRIDGE" = refactored."9 BRIDGE"
-AND orig."8 BRIDGE" = refactored."8 BRIDGE"
-AND orig."7 BRIDGE" = refactored."7 BRIDGE"
-AND orig."6 BRIDGE" = refactored."6 BRIDGE"
-AND orig."5 BRIDGE" = refactored."5 BRIDGE"
-AND orig."4 BRIDGE" = refactored."4 BRIDGE"
-AND orig."3 BRIDGE" = refactored."3 BRIDGE"
-AND orig."2 BRIDGE" = refactored."2 BRIDGE"
-AND orig."14 AVG" = refactored."14 AVG"
-AND orig."13 AVG" = refactored."13 AVG"
-AND orig."12 AVG" = refactored."12 AVG"
-AND orig."11 AVG" = refactored."11 AVG"
-AND orig."10 AVG" = refactored."10 AVG"
-AND orig."9 AVG" = refactored."9 AVG"
-AND orig."8 AVG" = refactored."8 AVG"
-AND orig."7 AVG" = refactored."7 AVG"
-AND orig."6 AVG" = refactored."6 AVG"
-AND orig."5 AVG" = refactored."5 AVG"
-AND orig."4 AVG" = refactored."4 AVG"
-AND orig."3 AVG" = refactored."3 AVG"
-AND orig."2 AVG" = refactored."2 AVG"
-AND orig."14 HIG" = refactored."14 HIG"
-AND orig."13 HIG" = refactored."13 HIG"
-AND orig."12 HIG" = refactored."12 HIG"
-AND orig."11 HIG" = refactored."11 HIG"
-AND orig."10 HIG" = refactored."10 HIG"
-AND orig."9 HIG" = refactored."9 HIG"
-AND orig."8 HIG" = refactored."8 HIG"
-AND orig."7 HIG" = refactored."7 HIG"
-AND orig."6 HIG" = refactored."6 HIG"
-AND orig."5 HIG" = refactored."5 HIG"
-AND orig."4 HIG" = refactored."4 HIG"
-AND orig."3 HIG" = refactored."3 HIG"
-AND orig."2 HIG" = refactored."2 HIG"
-AND orig.AS_OF = refactored.AS_OF
-WHERE orig.KEY IS NULL OR refactored.KEY IS NULL
-OR orig."14 RC1" IS NULL OR refactored."14 RC1" IS NULL
-OR orig."13 RC1" IS NULL OR refactored."13 RC1" IS NULL
-OR orig."12 RC1" IS NULL OR refactored."12 RC1" IS NULL
-OR orig."11 RC1" IS NULL OR refactored."11 RC1" IS NULL
-OR orig."10 RC1" IS NULL OR refactored."10 RC1" IS NULL
-OR orig." 9 RC1" IS NULL OR refactored." 9 RC1" IS NULL
-OR orig." 8 RC1" IS NULL OR refactored." 8 RC1" IS NULL
-OR orig." 7 RC1" IS NULL OR refactored." 7 RC1" IS NULL
-OR orig." 6 RC1" IS NULL OR refactored." 6 RC1" IS NULL
-OR orig." 5 RC1" IS NULL OR refactored." 5 RC1" IS NULL
-OR orig." 4 RC1" IS NULL OR refactored." 4 RC1" IS NULL
-OR orig." 3 RC1" IS NULL OR refactored." 3 RC1" IS NULL
-OR orig." 2 RC1" IS NULL OR refactored." 2 RC1" IS NULL
-OR orig."14 FAIL" IS NULL OR refactored."14 FAIL" IS NULL
-OR orig."13 FAIL" IS NULL OR refactored."13 FAIL" IS NULL
-OR orig."12 FAIL" IS NULL OR refactored."12 FAIL" IS NULL
-OR orig."11 FAIL" IS NULL OR refactored."11 FAIL" IS NULL
-OR orig."10 FAIL" IS NULL OR refactored."10 FAIL" IS NULL
-OR orig."9 FAIL" IS NULL OR refactored."9 FAIL" IS NULL
-OR orig."8 FAIL" IS NULL OR refactored."8 FAIL" IS NULL
-OR orig."7 FAIL" IS NULL OR refactored."7 FAIL" IS NULL
-OR orig."6 FAIL" IS NULL OR refactored."6 FAIL" IS NULL
-OR orig."5 FAIL" IS NULL OR refactored."5 FAIL" IS NULL
-OR orig."4 FAIL" IS NULL OR refactored."4 FAIL" IS NULL
-OR orig."3 FAIL" IS NULL OR refactored."3 FAIL" IS NULL
-OR orig."2 FAIL" IS NULL OR refactored."2 FAIL" IS NULL
-OR orig."14 SUCCESS" IS NULL OR refactored."14 SUCCESS" IS NULL
-OR orig."13 SUCCESS" IS NULL OR refactored."13 SUCCESS" IS NULL
-OR orig."12 SUCCESS" IS NULL OR refactored."12 SUCCESS" IS NULL
-OR orig."11 SUCCESS" IS NULL OR refactored."11 SUCCESS" IS NULL
-OR orig."10 SUCCESS" IS NULL OR refactored."10 SUCCESS" IS NULL
-OR orig."9 SUCCESS" IS NULL OR refactored."9 SUCCESS" IS NULL
-OR orig."8 SUCCESS" IS NULL OR refactored."8 SUCCESS" IS NULL
-OR orig."7 SUCCESS" IS NULL OR refactored."7 SUCCESS" IS NULL
-OR orig."6 SUCCESS" IS NULL OR refactored."6 SUCCESS" IS NULL
-OR orig."5 SUCCESS" IS NULL OR refactored."5 SUCCESS" IS NULL
-OR orig."4 SUCCESS" IS NULL OR refactored."4 SUCCESS" IS NULL
-OR orig."3 SUCCESS" IS NULL OR refactored."3 SUCCESS" IS NULL
-OR orig."2 SUCCESS" IS NULL OR refactored."2 SUCCESS" IS NULL
-OR orig."14 SUCCESS_2+" IS NULL OR refactored."14 SUCCESS_2+" IS NULL
-OR orig."13 SUCCESS_2+" IS NULL OR refactored."13 SUCCESS_2+" IS NULL
-OR orig."12 SUCCESS_2+" IS NULL OR refactored."12 SUCCESS_2+" IS NULL
-OR orig."11 SUCCESS_2+" IS NULL OR refactored."11 SUCCESS_2+" IS NULL
-OR orig."10 SUCCESS_2+" IS NULL OR refactored."10 SUCCESS_2+" IS NULL
-OR orig."9 SUCCESS_2+" IS NULL OR refactored."9 SUCCESS_2+" IS NULL
-OR orig."8 SUCCESS_2+" IS NULL OR refactored."8 SUCCESS_2+" IS NULL
-OR orig."7 SUCCESS_2+" IS NULL OR refactored."7 SUCCESS_2+" IS NULL
-OR orig."6 SUCCESS_2+" IS NULL OR refactored."6 SUCCESS_2+" IS NULL
-OR orig."5 SUCCESS_2+" IS NULL OR refactored."5 SUCCESS_2+" IS NULL
-OR orig."4 SUCCESS_2+" IS NULL OR refactored."4 SUCCESS_2+" IS NULL
-OR orig."3 SUCCESS_2+" IS NULL OR refactored."3 SUCCESS_2+" IS NULL
-OR orig."2 SUCCESS_2+" IS NULL OR refactored."2 SUCCESS_2+" IS NULL
-OR orig."14 COMPETITIVE" IS NULL OR refactored."14 COMPETITIVE" IS NULL
-OR orig."13 COMPETITIVE" IS NULL OR refactored."13 COMPETITIVE" IS NULL
-OR orig."12 COMPETITIVE" IS NULL OR refactored."12 COMPETITIVE" IS NULL
-OR orig."11 COMPETITIVE" IS NULL OR refactored."11 COMPETITIVE" IS NULL
-OR orig."10 COMPETITIVE" IS NULL OR refactored."10 COMPETITIVE" IS NULL
-OR orig."9 COMPETITIVE" IS NULL OR refactored."9 COMPETITIVE" IS NULL
-OR orig."8 COMPETITIVE" IS NULL OR refactored."8 COMPETITIVE" IS NULL
-OR orig."7 COMPETITIVE" IS NULL OR refactored."7 COMPETITIVE" IS NULL
-OR orig."6 COMPETITIVE" IS NULL OR refactored."6 COMPETITIVE" IS NULL
-OR orig."5 COMPETITIVE" IS NULL OR refactored."5 COMPETITIVE" IS NULL
-OR orig."4 COMPETITIVE" IS NULL OR refactored."4 COMPETITIVE" IS NULL
-OR orig."3 COMPETITIVE" IS NULL OR refactored."3 COMPETITIVE" IS NULL
-OR orig."2 COMPETITIVE" IS NULL OR refactored."2 COMPETITIVE" IS NULL
-OR orig."14 WIN" IS NULL OR refactored."14 WIN" IS NULL
-OR orig."13 WIN" IS NULL OR refactored."13 WIN" IS NULL
-OR orig."12 WIN" IS NULL OR refactored."12 WIN" IS NULL
-OR orig."11 WIN" IS NULL OR refactored."11 WIN" IS NULL
-OR orig."10 WIN" IS NULL OR refactored."10 WIN" IS NULL
-OR orig."9 WIN" IS NULL OR refactored."9 WIN" IS NULL
-OR orig."8 WIN" IS NULL OR refactored."8 WIN" IS NULL
-OR orig."7 WIN" IS NULL OR refactored."7 WIN" IS NULL
-OR orig."6 WIN" IS NULL OR refactored."6 WIN" IS NULL
-OR orig."5 WIN" IS NULL OR refactored."5 WIN" IS NULL
-OR orig."4 WIN" IS NULL OR refactored."4 WIN" IS NULL
-OR orig."3 WIN" IS NULL OR refactored."3 WIN" IS NULL
-OR orig."2 WIN" IS NULL OR refactored."2 WIN" IS NULL
-OR orig."14 CQ" IS NULL OR refactored."14 CQ" IS NULL
-OR orig."13 CQ" IS NULL OR refactored."13 CQ" IS NULL
-OR orig."12 CQ" IS NULL OR refactored."12 CQ" IS NULL
-OR orig."11 CQ" IS NULL OR refactored."11 CQ" IS NULL
-OR orig."10 CQ" IS NULL OR refactored."10 CQ" IS NULL
-OR orig."9 CQ" IS NULL OR refactored."9 CQ" IS NULL
-OR orig."8 CQ" IS NULL OR refactored."8 CQ" IS NULL
-OR orig."7 CQ" IS NULL OR refactored."7 CQ" IS NULL
-OR orig."6 CQ" IS NULL OR refactored."6 CQ" IS NULL
-OR orig."5 CQ" IS NULL OR refactored."5 CQ" IS NULL
-OR orig."4 CQ" IS NULL OR refactored."4 CQ" IS NULL
-OR orig."3 CQ" IS NULL OR refactored."3 CQ" IS NULL
-OR orig."2 CQ" IS NULL OR refactored."2 CQ" IS NULL
-OR orig."14 ISSUE" IS NULL OR refactored."14 ISSUE" IS NULL
-OR orig."13 ISSUE" IS NULL OR refactored."13 ISSUE" IS NULL
-OR orig."12 ISSUE" IS NULL OR refactored."12 ISSUE" IS NULL
-OR orig."11 ISSUE" IS NULL OR refactored."11 ISSUE" IS NULL
-OR orig."10 ISSUE" IS NULL OR refactored."10 ISSUE" IS NULL
-OR orig."9 ISSUE" IS NULL OR refactored."9 ISSUE" IS NULL
-OR orig."8 ISSUE" IS NULL OR refactored."8 ISSUE" IS NULL
-OR orig."7 ISSUE" IS NULL OR refactored."7 ISSUE" IS NULL
-OR orig."6 ISSUE" IS NULL OR refactored."6 ISSUE" IS NULL
-OR orig."5 ISSUE" IS NULL OR refactored."5 ISSUE" IS NULL
-OR orig."4 ISSUE" IS NULL OR refactored."4 ISSUE" IS NULL
-OR orig."3 ISSUE" IS NULL OR refactored."3 ISSUE" IS NULL
-OR orig."2 ISSUE" IS NULL OR refactored."2 ISSUE" IS NULL
-OR orig."14 BRIDGE" IS NULL OR refactored."14 BRIDGE" IS NULL
-OR orig."13 BRIDGE" IS NULL OR refactored."13 BRIDGE" IS NULL
-OR orig."12 BRIDGE" IS NULL OR refactored."12 BRIDGE" IS NULL
-OR orig."11 BRIDGE" IS NULL OR refactored."11 BRIDGE" IS NULL
-OR orig."10 BRIDGE" IS NULL OR refactored."10 BRIDGE" IS NULL
-OR orig."9 BRIDGE" IS NULL OR refactored."9 BRIDGE" IS NULL
-OR orig."8 BRIDGE" IS NULL OR refactored."8 BRIDGE" IS NULL
-OR orig."7 BRIDGE" IS NULL OR refactored."7 BRIDGE" IS NULL
-OR orig."6 BRIDGE" IS NULL OR refactored."6 BRIDGE" IS NULL
-OR orig."5 BRIDGE" IS NULL OR refactored."5 BRIDGE" IS NULL
-OR orig."4 BRIDGE" IS NULL OR refactored."4 BRIDGE" IS NULL
-OR orig."3 BRIDGE" IS NULL OR refactored."3 BRIDGE" IS NULL
-OR orig."2 BRIDGE" IS NULL OR refactored."2 BRIDGE" IS NULL
-OR orig."14 AVG" IS NULL OR refactored."14 AVG" IS NULL
-OR orig."13 AVG" IS NULL OR refactored."13 AVG" IS NULL
-OR orig."12 AVG" IS NULL OR refactored."12 AVG" IS NULL
-OR orig."11 AVG" IS NULL OR refactored."11 AVG" IS NULL
-OR orig."10 AVG" IS NULL OR refactored."10 AVG" IS NULL
-OR orig."9 AVG" IS NULL OR refactored."9 AVG" IS NULL
-OR orig."8 AVG" IS NULL OR refactored."8 AVG" IS NULL
-OR orig."7 AVG" IS NULL OR refactored."7 AVG" IS NULL
-OR orig."6 AVG" IS NULL OR refactored."6 AVG" IS NULL
-OR orig."5 AVG" IS NULL OR refactored."5 AVG" IS NULL
-OR orig."4 AVG" IS NULL OR refactored."4 AVG" IS NULL
-OR orig."3 AVG" IS NULL OR refactored."3 AVG" IS NULL
-OR orig."2 AVG" IS NULL OR refactored."2 AVG" IS NULL
-OR orig."14 HIG" IS NULL OR refactored."14 HIG" IS NULL
-OR orig."13 HIG" IS NULL OR refactored."13 HIG" IS NULL
-OR orig."12 HIG" IS NULL OR refactored."12 HIG" IS NULL
-OR orig."11 HIG" IS NULL OR refactored."11 HIG" IS NULL
-OR orig."10 HIG" IS NULL OR refactored."10 HIG" IS NULL
-OR orig."9 HIG" IS NULL OR refactored."9 HIG" IS NULL
-OR orig."8 HIG" IS NULL OR refactored."8 HIG" IS NULL
-OR orig."7 HIG" IS NULL OR refactored."7 HIG" IS NULL
-OR orig."6 HIG" IS NULL OR refactored."6 HIG" IS NULL
-OR orig."5 HIG" IS NULL OR refactored."5 HIG" IS NULL
-OR orig."4 HIG" IS NULL OR refactored."4 HIG" IS NULL
-OR orig."3 HIG" IS NULL OR refactored."3 HIG" IS NULL
-OR orig."2 HIG" IS NULL OR refactored."2 HIG" IS NULL;
+-- -- Compare the results
+-- SELECT *
+-- FROM orig
+-- FULL OUTER JOIN refactored
+-- ON orig.KEY = refactored.KEY
+-- AND orig."14 RC1" = refactored."14 RC1"
+-- AND orig."13 RC1" = refactored."13 RC1"
+-- AND orig."12 RC1" = refactored."12 RC1"
+-- AND orig."11 RC1" = refactored."11 RC1"
+-- AND orig."10 RC1" = refactored."10 RC1"
+-- AND orig." 9 RC1" = refactored." 9 RC1"
+-- AND orig." 8 RC1" = refactored." 8 RC1"
+-- AND orig." 7 RC1" = refactored." 7 RC1"
+-- AND orig." 6 RC1" = refactored." 6 RC1"
+-- AND orig." 5 RC1" = refactored." 5 RC1"
+-- AND orig." 4 RC1" = refactored." 4 RC1"
+-- AND orig." 3 RC1" = refactored." 3 RC1"
+-- AND orig." 2 RC1" = refactored." 2 RC1"
+-- AND orig."14 FAIL" = refactored."14 FAIL"
+-- AND orig."13 FAIL" = refactored."13 FAIL"
+-- AND orig."12 FAIL" = refactored."12 FAIL"
+-- AND orig."11 FAIL" = refactored."11 FAIL"
+-- AND orig."10 FAIL" = refactored."10 FAIL"
+-- AND orig."9 FAIL" = refactored."9 FAIL"
+-- AND orig."8 FAIL" = refactored."8 FAIL"
+-- AND orig."7 FAIL" = refactored."7 FAIL"
+-- AND orig."6 FAIL" = refactored."6 FAIL"
+-- AND orig."5 FAIL" = refactored."5 FAIL"
+-- AND orig."4 FAIL" = refactored."4 FAIL"
+-- AND orig."3 FAIL" = refactored."3 FAIL"
+-- AND orig."2 FAIL" = refactored."2 FAIL"
+-- AND orig."14 SUCCESS" = refactored."14 SUCCESS"
+-- AND orig."13 SUCCESS" = refactored."13 SUCCESS"
+-- AND orig."12 SUCCESS" = refactored."12 SUCCESS"
+-- AND orig."11 SUCCESS" = refactored."11 SUCCESS"
+-- AND orig."10 SUCCESS" = refactored."10 SUCCESS"
+-- AND orig."9 SUCCESS" = refactored."9 SUCCESS"
+-- AND orig."8 SUCCESS" = refactored."8 SUCCESS"
+-- AND orig."7 SUCCESS" = refactored."7 SUCCESS"
+-- AND orig."6 SUCCESS" = refactored."6 SUCCESS"
+-- AND orig."5 SUCCESS" = refactored."5 SUCCESS"
+-- AND orig."4 SUCCESS" = refactored."4 SUCCESS"
+-- AND orig."3 SUCCESS" = refactored."3 SUCCESS"
+-- AND orig."2 SUCCESS" = refactored."2 SUCCESS"
+-- AND orig."14 SUCCESS_2+" = refactored."14 SUCCESS_2+"
+-- AND orig."13 SUCCESS_2+" = refactored."13 SUCCESS_2+"
+-- AND orig."12 SUCCESS_2+" = refactored."12 SUCCESS_2+"
+-- AND orig."11 SUCCESS_2+" = refactored."11 SUCCESS_2+"
+-- AND orig."10 SUCCESS_2+" = refactored."10 SUCCESS_2+"
+-- AND orig."9 SUCCESS_2+" = refactored."9 SUCCESS_2+"
+-- AND orig."8 SUCCESS_2+" = refactored."8 SUCCESS_2+"
+-- AND orig."7 SUCCESS_2+" = refactored."7 SUCCESS_2+"
+-- AND orig."6 SUCCESS_2+" = refactored."6 SUCCESS_2+"
+-- AND orig."5 SUCCESS_2+" = refactored."5 SUCCESS_2+"
+-- AND orig."4 SUCCESS_2+" = refactored."4 SUCCESS_2+"
+-- AND orig."3 SUCCESS_2+" = refactored."3 SUCCESS_2+"
+-- AND orig."2 SUCCESS_2+" = refactored."2 SUCCESS_2+"
+-- AND orig."14 COMPETITIVE" = refactored."14 COMPETITIVE"
+-- AND orig."13 COMPETITIVE" = refactored."13 COMPETITIVE"
+-- AND orig."12 COMPETITIVE" = refactored."12 COMPETITIVE"
+-- AND orig."11 COMPETITIVE" = refactored."11 COMPETITIVE"
+-- AND orig."10 COMPETITIVE" = refactored."10 COMPETITIVE"
+-- AND orig."9 COMPETITIVE" = refactored."9 COMPETITIVE"
+-- AND orig."8 COMPETITIVE" = refactored."8 COMPETITIVE"
+-- AND orig."7 COMPETITIVE" = refactored."7 COMPETITIVE"
+-- AND orig."6 COMPETITIVE" = refactored."6 COMPETITIVE"
+-- AND orig."5 COMPETITIVE" = refactored."5 COMPETITIVE"
+-- AND orig."4 COMPETITIVE" = refactored."4 COMPETITIVE"
+-- AND orig."3 COMPETITIVE" = refactored."3 COMPETITIVE"
+-- AND orig."2 COMPETITIVE" = refactored."2 COMPETITIVE"
+-- AND orig."14 WIN" = refactored."14 WIN"
+-- AND orig."13 WIN" = refactored."13 WIN"
+-- AND orig."12 WIN" = refactored."12 WIN"
+-- AND orig."11 WIN" = refactored."11 WIN"
+-- AND orig."10 WIN" = refactored."10 WIN"
+-- AND orig."9 WIN" = refactored."9 WIN"
+-- AND orig."8 WIN" = refactored."8 WIN"
+-- AND orig."7 WIN" = refactored."7 WIN"
+-- AND orig."6 WIN" = refactored."6 WIN"
+-- AND orig."5 WIN" = refactored."5 WIN"
+-- AND orig."4 WIN" = refactored."4 WIN"
+-- AND orig."3 WIN" = refactored."3 WIN"
+-- AND orig."2 WIN" = refactored."2 WIN"
+-- AND orig."14 CQ" = refactored."14 CQ"
+-- AND orig."13 CQ" = refactored."13 CQ"
+-- AND orig."12 CQ" = refactored."12 CQ"
+-- AND orig."11 CQ" = refactored."11 CQ"
+-- AND orig."10 CQ" = refactored."10 CQ"
+-- AND orig."9 CQ" = refactored."9 CQ"
+-- AND orig."8 CQ" = refactored."8 CQ"
+-- AND orig."7 CQ" = refactored."7 CQ"
+-- AND orig."6 CQ" = refactored."6 CQ"
+-- AND orig."5 CQ" = refactored."5 CQ"
+-- AND orig."4 CQ" = refactored."4 CQ"
+-- AND orig."3 CQ" = refactored."3 CQ"
+-- AND orig."2 CQ" = refactored."2 CQ"
+-- AND orig."14 ISSUE" = refactored."14 ISSUE"
+-- AND orig."13 ISSUE" = refactored."13 ISSUE"
+-- AND orig."12 ISSUE" = refactored."12 ISSUE"
+-- AND orig."11 ISSUE" = refactored."11 ISSUE"
+-- AND orig."10 ISSUE" = refactored."10 ISSUE"
+-- AND orig."9 ISSUE" = refactored."9 ISSUE"
+-- AND orig."8 ISSUE" = refactored."8 ISSUE"
+-- AND orig."7 ISSUE" = refactored."7 ISSUE"
+-- AND orig."6 ISSUE" = refactored."6 ISSUE"
+-- AND orig."5 ISSUE" = refactored."5 ISSUE"
+-- AND orig."4 ISSUE" = refactored."4 ISSUE"
+-- AND orig."3 ISSUE" = refactored."3 ISSUE"
+-- AND orig."2 ISSUE" = refactored."2 ISSUE"
+-- AND orig."14 BRIDGE" = refactored."14 BRIDGE"
+-- AND orig."13 BRIDGE" = refactored."13 BRIDGE"
+-- AND orig."12 BRIDGE" = refactored."12 BRIDGE"
+-- AND orig."11 BRIDGE" = refactored."11 BRIDGE"
+-- AND orig."10 BRIDGE" = refactored."10 BRIDGE"
+-- AND orig."9 BRIDGE" = refactored."9 BRIDGE"
+-- AND orig."8 BRIDGE" = refactored."8 BRIDGE"
+-- AND orig."7 BRIDGE" = refactored."7 BRIDGE"
+-- AND orig."6 BRIDGE" = refactored."6 BRIDGE"
+-- AND orig."5 BRIDGE" = refactored."5 BRIDGE"
+-- AND orig."4 BRIDGE" = refactored."4 BRIDGE"
+-- AND orig."3 BRIDGE" = refactored."3 BRIDGE"
+-- AND orig."2 BRIDGE" = refactored."2 BRIDGE"
+-- AND orig."14 AVG" = refactored."14 AVG"
+-- AND orig."13 AVG" = refactored."13 AVG"
+-- AND orig."12 AVG" = refactored."12 AVG"
+-- AND orig."11 AVG" = refactored."11 AVG"
+-- AND orig."10 AVG" = refactored."10 AVG"
+-- AND orig."9 AVG" = refactored."9 AVG"
+-- AND orig."8 AVG" = refactored."8 AVG"
+-- AND orig."7 AVG" = refactored."7 AVG"
+-- AND orig."6 AVG" = refactored."6 AVG"
+-- AND orig."5 AVG" = refactored."5 AVG"
+-- AND orig."4 AVG" = refactored."4 AVG"
+-- AND orig."3 AVG" = refactored."3 AVG"
+-- AND orig."2 AVG" = refactored."2 AVG"
+-- AND orig."14 HIG" = refactored."14 HIG"
+-- AND orig."13 HIG" = refactored."13 HIG"
+-- AND orig."12 HIG" = refactored."12 HIG"
+-- AND orig."11 HIG" = refactored."11 HIG"
+-- AND orig."10 HIG" = refactored."10 HIG"
+-- AND orig."9 HIG" = refactored."9 HIG"
+-- AND orig."8 HIG" = refactored."8 HIG"
+-- AND orig."7 HIG" = refactored."7 HIG"
+-- AND orig."6 HIG" = refactored."6 HIG"
+-- AND orig."5 HIG" = refactored."5 HIG"
+-- AND orig."4 HIG" = refactored."4 HIG"
+-- AND orig."3 HIG" = refactored."3 HIG"
+-- AND orig."2 HIG" = refactored."2 HIG"
+-- AND orig.AS_OF = refactored.AS_OF
+-- WHERE orig.KEY IS NULL OR refactored.KEY IS NULL
+-- OR orig."14 RC1" IS NULL OR refactored."14 RC1" IS NULL
+-- OR orig."13 RC1" IS NULL OR refactored."13 RC1" IS NULL
+-- OR orig."12 RC1" IS NULL OR refactored."12 RC1" IS NULL
+-- OR orig."11 RC1" IS NULL OR refactored."11 RC1" IS NULL
+-- OR orig."10 RC1" IS NULL OR refactored."10 RC1" IS NULL
+-- OR orig." 9 RC1" IS NULL OR refactored." 9 RC1" IS NULL
+-- OR orig." 8 RC1" IS NULL OR refactored." 8 RC1" IS NULL
+-- OR orig." 7 RC1" IS NULL OR refactored." 7 RC1" IS NULL
+-- OR orig." 6 RC1" IS NULL OR refactored." 6 RC1" IS NULL
+-- OR orig." 5 RC1" IS NULL OR refactored." 5 RC1" IS NULL
+-- OR orig." 4 RC1" IS NULL OR refactored." 4 RC1" IS NULL
+-- OR orig." 3 RC1" IS NULL OR refactored." 3 RC1" IS NULL
+-- OR orig." 2 RC1" IS NULL OR refactored." 2 RC1" IS NULL
+-- OR orig."14 FAIL" IS NULL OR refactored."14 FAIL" IS NULL
+-- OR orig."13 FAIL" IS NULL OR refactored."13 FAIL" IS NULL
+-- OR orig."12 FAIL" IS NULL OR refactored."12 FAIL" IS NULL
+-- OR orig."11 FAIL" IS NULL OR refactored."11 FAIL" IS NULL
+-- OR orig."10 FAIL" IS NULL OR refactored."10 FAIL" IS NULL
+-- OR orig."9 FAIL" IS NULL OR refactored."9 FAIL" IS NULL
+-- OR orig."8 FAIL" IS NULL OR refactored."8 FAIL" IS NULL
+-- OR orig."7 FAIL" IS NULL OR refactored."7 FAIL" IS NULL
+-- OR orig."6 FAIL" IS NULL OR refactored."6 FAIL" IS NULL
+-- OR orig."5 FAIL" IS NULL OR refactored."5 FAIL" IS NULL
+-- OR orig."4 FAIL" IS NULL OR refactored."4 FAIL" IS NULL
+-- OR orig."3 FAIL" IS NULL OR refactored."3 FAIL" IS NULL
+-- OR orig."2 FAIL" IS NULL OR refactored."2 FAIL" IS NULL
+-- OR orig."14 SUCCESS" IS NULL OR refactored."14 SUCCESS" IS NULL
+-- OR orig."13 SUCCESS" IS NULL OR refactored."13 SUCCESS" IS NULL
+-- OR orig."12 SUCCESS" IS NULL OR refactored."12 SUCCESS" IS NULL
+-- OR orig."11 SUCCESS" IS NULL OR refactored."11 SUCCESS" IS NULL
+-- OR orig."10 SUCCESS" IS NULL OR refactored."10 SUCCESS" IS NULL
+-- OR orig."9 SUCCESS" IS NULL OR refactored."9 SUCCESS" IS NULL
+-- OR orig."8 SUCCESS" IS NULL OR refactored."8 SUCCESS" IS NULL
+-- OR orig."7 SUCCESS" IS NULL OR refactored."7 SUCCESS" IS NULL
+-- OR orig."6 SUCCESS" IS NULL OR refactored."6 SUCCESS" IS NULL
+-- OR orig."5 SUCCESS" IS NULL OR refactored."5 SUCCESS" IS NULL
+-- OR orig."4 SUCCESS" IS NULL OR refactored."4 SUCCESS" IS NULL
+-- OR orig."3 SUCCESS" IS NULL OR refactored."3 SUCCESS" IS NULL
+-- OR orig."2 SUCCESS" IS NULL OR refactored."2 SUCCESS" IS NULL
+-- OR orig."14 SUCCESS_2+" IS NULL OR refactored."14 SUCCESS_2+" IS NULL
+-- OR orig."13 SUCCESS_2+" IS NULL OR refactored."13 SUCCESS_2+" IS NULL
+-- OR orig."12 SUCCESS_2+" IS NULL OR refactored."12 SUCCESS_2+" IS NULL
+-- OR orig."11 SUCCESS_2+" IS NULL OR refactored."11 SUCCESS_2+" IS NULL
+-- OR orig."10 SUCCESS_2+" IS NULL OR refactored."10 SUCCESS_2+" IS NULL
+-- OR orig."9 SUCCESS_2+" IS NULL OR refactored."9 SUCCESS_2+" IS NULL
+-- OR orig."8 SUCCESS_2+" IS NULL OR refactored."8 SUCCESS_2+" IS NULL
+-- OR orig."7 SUCCESS_2+" IS NULL OR refactored."7 SUCCESS_2+" IS NULL
+-- OR orig."6 SUCCESS_2+" IS NULL OR refactored."6 SUCCESS_2+" IS NULL
+-- OR orig."5 SUCCESS_2+" IS NULL OR refactored."5 SUCCESS_2+" IS NULL
+-- OR orig."4 SUCCESS_2+" IS NULL OR refactored."4 SUCCESS_2+" IS NULL
+-- OR orig."3 SUCCESS_2+" IS NULL OR refactored."3 SUCCESS_2+" IS NULL
+-- OR orig."2 SUCCESS_2+" IS NULL OR refactored."2 SUCCESS_2+" IS NULL
+-- OR orig."14 COMPETITIVE" IS NULL OR refactored."14 COMPETITIVE" IS NULL
+-- OR orig."13 COMPETITIVE" IS NULL OR refactored."13 COMPETITIVE" IS NULL
+-- OR orig."12 COMPETITIVE" IS NULL OR refactored."12 COMPETITIVE" IS NULL
+-- OR orig."11 COMPETITIVE" IS NULL OR refactored."11 COMPETITIVE" IS NULL
+-- OR orig."10 COMPETITIVE" IS NULL OR refactored."10 COMPETITIVE" IS NULL
+-- OR orig."9 COMPETITIVE" IS NULL OR refactored."9 COMPETITIVE" IS NULL
+-- OR orig."8 COMPETITIVE" IS NULL OR refactored."8 COMPETITIVE" IS NULL
+-- OR orig."7 COMPETITIVE" IS NULL OR refactored."7 COMPETITIVE" IS NULL
+-- OR orig."6 COMPETITIVE" IS NULL OR refactored."6 COMPETITIVE" IS NULL
+-- OR orig."5 COMPETITIVE" IS NULL OR refactored."5 COMPETITIVE" IS NULL
+-- OR orig."4 COMPETITIVE" IS NULL OR refactored."4 COMPETITIVE" IS NULL
+-- OR orig."3 COMPETITIVE" IS NULL OR refactored."3 COMPETITIVE" IS NULL
+-- OR orig."2 COMPETITIVE" IS NULL OR refactored."2 COMPETITIVE" IS NULL
+-- OR orig."14 WIN" IS NULL OR refactored."14 WIN" IS NULL
+-- OR orig."13 WIN" IS NULL OR refactored."13 WIN" IS NULL
+-- OR orig."12 WIN" IS NULL OR refactored."12 WIN" IS NULL
+-- OR orig."11 WIN" IS NULL OR refactored."11 WIN" IS NULL
+-- OR orig."10 WIN" IS NULL OR refactored."10 WIN" IS NULL
+-- OR orig."9 WIN" IS NULL OR refactored."9 WIN" IS NULL
+-- OR orig."8 WIN" IS NULL OR refactored."8 WIN" IS NULL
+-- OR orig."7 WIN" IS NULL OR refactored."7 WIN" IS NULL
+-- OR orig."6 WIN" IS NULL OR refactored."6 WIN" IS NULL
+-- OR orig."5 WIN" IS NULL OR refactored."5 WIN" IS NULL
+-- OR orig."4 WIN" IS NULL OR refactored."4 WIN" IS NULL
+-- OR orig."3 WIN" IS NULL OR refactored."3 WIN" IS NULL
+-- OR orig."2 WIN" IS NULL OR refactored."2 WIN" IS NULL
+-- OR orig."14 CQ" IS NULL OR refactored."14 CQ" IS NULL
+-- OR orig."13 CQ" IS NULL OR refactored."13 CQ" IS NULL
+-- OR orig."12 CQ" IS NULL OR refactored."12 CQ" IS NULL
+-- OR orig."11 CQ" IS NULL OR refactored."11 CQ" IS NULL
+-- OR orig."10 CQ" IS NULL OR refactored."10 CQ" IS NULL
+-- OR orig."9 CQ" IS NULL OR refactored."9 CQ" IS NULL
+-- OR orig."8 CQ" IS NULL OR refactored."8 CQ" IS NULL
+-- OR orig."7 CQ" IS NULL OR refactored."7 CQ" IS NULL
+-- OR orig."6 CQ" IS NULL OR refactored."6 CQ" IS NULL
+-- OR orig."5 CQ" IS NULL OR refactored."5 CQ" IS NULL
+-- OR orig."4 CQ" IS NULL OR refactored."4 CQ" IS NULL
+-- OR orig."3 CQ" IS NULL OR refactored."3 CQ" IS NULL
+-- OR orig."2 CQ" IS NULL OR refactored."2 CQ" IS NULL
+-- OR orig."14 ISSUE" IS NULL OR refactored."14 ISSUE" IS NULL
+-- OR orig."13 ISSUE" IS NULL OR refactored."13 ISSUE" IS NULL
+-- OR orig."12 ISSUE" IS NULL OR refactored."12 ISSUE" IS NULL
+-- OR orig."11 ISSUE" IS NULL OR refactored."11 ISSUE" IS NULL
+-- OR orig."10 ISSUE" IS NULL OR refactored."10 ISSUE" IS NULL
+-- OR orig."9 ISSUE" IS NULL OR refactored."9 ISSUE" IS NULL
+-- OR orig."8 ISSUE" IS NULL OR refactored."8 ISSUE" IS NULL
+-- OR orig."7 ISSUE" IS NULL OR refactored."7 ISSUE" IS NULL
+-- OR orig."6 ISSUE" IS NULL OR refactored."6 ISSUE" IS NULL
+-- OR orig."5 ISSUE" IS NULL OR refactored."5 ISSUE" IS NULL
+-- OR orig."4 ISSUE" IS NULL OR refactored."4 ISSUE" IS NULL
+-- OR orig."3 ISSUE" IS NULL OR refactored."3 ISSUE" IS NULL
+-- OR orig."2 ISSUE" IS NULL OR refactored."2 ISSUE" IS NULL
+-- OR orig."14 BRIDGE" IS NULL OR refactored."14 BRIDGE" IS NULL
+-- OR orig."13 BRIDGE" IS NULL OR refactored."13 BRIDGE" IS NULL
+-- OR orig."12 BRIDGE" IS NULL OR refactored."12 BRIDGE" IS NULL
+-- OR orig."11 BRIDGE" IS NULL OR refactored."11 BRIDGE" IS NULL
+-- OR orig."10 BRIDGE" IS NULL OR refactored."10 BRIDGE" IS NULL
+-- OR orig."9 BRIDGE" IS NULL OR refactored."9 BRIDGE" IS NULL
+-- OR orig."8 BRIDGE" IS NULL OR refactored."8 BRIDGE" IS NULL
+-- OR orig."7 BRIDGE" IS NULL OR refactored."7 BRIDGE" IS NULL
+-- OR orig."6 BRIDGE" IS NULL OR refactored."6 BRIDGE" IS NULL
+-- OR orig."5 BRIDGE" IS NULL OR refactored."5 BRIDGE" IS NULL
+-- OR orig."4 BRIDGE" IS NULL OR refactored."4 BRIDGE" IS NULL
+-- OR orig."3 BRIDGE" IS NULL OR refactored."3 BRIDGE" IS NULL
+-- OR orig."2 BRIDGE" IS NULL OR refactored."2 BRIDGE" IS NULL
+-- OR orig."14 AVG" IS NULL OR refactored."14 AVG" IS NULL
+-- OR orig."13 AVG" IS NULL OR refactored."13 AVG" IS NULL
+-- OR orig."12 AVG" IS NULL OR refactored."12 AVG" IS NULL
+-- OR orig."11 AVG" IS NULL OR refactored."11 AVG" IS NULL
+-- OR orig."10 AVG" IS NULL OR refactored."10 AVG" IS NULL
+-- OR orig."9 AVG" IS NULL OR refactored."9 AVG" IS NULL
+-- OR orig."8 AVG" IS NULL OR refactored."8 AVG" IS NULL
+-- OR orig."7 AVG" IS NULL OR refactored."7 AVG" IS NULL
+-- OR orig."6 AVG" IS NULL OR refactored."6 AVG" IS NULL
+-- OR orig."5 AVG" IS NULL OR refactored."5 AVG" IS NULL
+-- OR orig."4 AVG" IS NULL OR refactored."4 AVG" IS NULL
+-- OR orig."3 AVG" IS NULL OR refactored."3 AVG" IS NULL
+-- OR orig."2 AVG" IS NULL OR refactored."2 AVG" IS NULL
+-- OR orig."14 HIG" IS NULL OR refactored."14 HIG" IS NULL
+-- OR orig."13 HIG" IS NULL OR refactored."13 HIG" IS NULL
+-- OR orig."12 HIG" IS NULL OR refactored."12 HIG" IS NULL
+-- OR orig."11 HIG" IS NULL OR refactored."11 HIG" IS NULL
+-- OR orig."10 HIG" IS NULL OR refactored."10 HIG" IS NULL
+-- OR orig."9 HIG" IS NULL OR refactored."9 HIG" IS NULL
+-- OR orig."8 HIG" IS NULL OR refactored."8 HIG" IS NULL
+-- OR orig."7 HIG" IS NULL OR refactored."7 HIG" IS NULL
+-- OR orig."6 HIG" IS NULL OR refactored."6 HIG" IS NULL
+-- OR orig."5 HIG" IS NULL OR refactored."5 HIG" IS NULL
+-- OR orig."4 HIG" IS NULL OR refactored."4 HIG" IS NULL
+-- OR orig."3 HIG" IS NULL OR refactored."3 HIG" IS NULL
+-- OR orig."2 HIG" IS NULL OR refactored."2 HIG" IS NULL;

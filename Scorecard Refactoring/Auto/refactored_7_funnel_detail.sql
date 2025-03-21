@@ -1,36 +1,3 @@
--- Functions Needing to be created
-
--- Used for RC1
-CREATE OR REPLACE FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.rc1_funnel_scorecard(month_diff INT, QUOTE_DT DATE, QCN STRING)
-RETURNS NUMBER(13, 0)
-LANGUAGE SQL
-AS
-$$
-    SUM(CASE WHEN DATEDIFF(MONTH, QUOTE_DT, SYSDATE()) = month_diff AND LENGTH(QCN) > 5 THEN 1 ELSE 0 END)
-$$;
-
--- Used for Success 2+
-CREATE OR REPLACE FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.adv_ind_funnel_scorecard(month_diff INT, QUOTE_DT DATE, SUCCESS_IND STRING, CARRIERSQUOTED INT)
-RETURNS NUMBER(13, 0)
-LANGUAGE SQL
-AS
-$$
-    SUM(CASE WHEN DATEDIFF(MONTH, QUOTE_DT, SYSDATE()) = month_diff AND SUCCESS_IND = '1' AND CARRIERSQUOTED > 2 THEN ROUND(SUCCESS_IND, 0) ELSE 0 END)
-$$;
-
-DROP FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.adv_ind_funnel_scorecard(INT, DATE, STRING, INT, NUMBER)
-
--- Used for Failure, Success, Competitive, Win, Completed Quote, Issue, AND Bridge
-CREATE OR REPLACE FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.ind_funnel_scorecard(month_diff INT, QUOTE_DT DATE, IND STRING)
-RETURNS NUMBER(13, 0)
-LANGUAGE SQL
-AS
-$$
-    SUM(CASE WHEN DATEDIFF(MONTH, QUOTE_DT, SYSDATE()) = month_diff AND IND = '1' THEN ROUND(IND, 0) ELSE 0 END)
-$$;
-
--- DROP FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.ind_funnel_scorecard(INT, DATE, STRING)
-
 WITH market_index AS -- Segmenting funnel data by market index
 (
     SELECT CONCAT(STATE_ABBR, 'Market Index', (CASE WHEN MKT_INDX_CTGY_CD IS NULL THEN 'unknown' else MKT_INDX_CTGY_CD END)) as Key,
