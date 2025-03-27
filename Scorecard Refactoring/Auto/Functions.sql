@@ -80,6 +80,15 @@ $$
     SUM(CASE WHEN DATEDIFF(MONTH, QUOTE_DT, SYSDATE()) = month_diff THEN RETURN_NUM ELSE 0 END) 
 $$;
 
+CREATE OR REPLACE FUNCTION DSC_PLBI_DB.APP_AUTO_DEV.perst_calc_scorecard(monthdiff INT, POL_EFF_DT DATE, CANCEL INT, ATR INT)
+RETURNS NUMBER(13, 0)
+LANGUAGE SQL
+AS
+$$
+    1 - DIV0NULL(SUM(CASE WHEN DATEDIFF(MONTH, POL_EFF_DT, SYSDATE()) = monthdiff THEN CANCEL ELSE 0 END), 
+                 SUM(CASE WHEN DATEDIFF(MONTH, POL_EFF_DT, SYSDATE()) = monthdiff THEN ATR ELSE 0 END))
+$$;
+
 ------------------- Validation Query -------------------
 
 WITH orig AS 
