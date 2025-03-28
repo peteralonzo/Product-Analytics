@@ -109,4 +109,4 @@ SELECT * FROM refactored)
 UNION 
 (SELECT * FROM refactored
 EXCEPT
-SELECT * FROM orig)
+SELECT * FROM orig);
