@@ -1,0 +1,63 @@
+
+/* ----------------- 6nacd1bxd_home_scorecard ----------------- */
+
+insert_job: 6nacd1bxd_home_scorecard   job_type: BOX 
+owner: pa08042e@a4054ue1plpld01
+permission: 
+date_conditions: 1
+run_calendar: daily
+start_times: "06:30"
+box_success: s(6nacd1cmd_home_scorecard_load)
+description: "Starting Job for Home Scorecard"
+alarm_if_fail: 1
+alarm_if_terminated: 1
+
+/* ----------------- 6nacd1cmd_home_scorecard_load ----------------- */ 
+
+insert_job: 6nacd1cmd_home_scorecard_load   job_type: CMD 
+box_name: 6nacd1bxd_home_scorecard
+command: /export/home/pa08042e/.conda/envs/pa08042_venv/bin/python $Scripts/home_scorecard.py -f ${Autosys_Log}
+machine: acepldsdsc01
+owner: pa08042e@a4054ue1plpld01
+permission: 
+date_conditions: 0
+description: "Building Snowflake Tables for Home Scorecard"
+std_out_file: ">>$Logs/${Autosys_Log}"
+std_err_file: ">>$Logs/${Autosys_Errlog}"
+alarm_if_fail: 1
+profile: "/tech/appl/default/user/pa08042e/home_scorecard/config/home_sc.profile"
+alarm_if_terminated: 1
+
+/* ----------------- 6nacd1cmd_home_scorecard_succ_ntfy ----------------- */ 
+
+insert_job: 6nacd1cmd_home_scorecard_succ_ntfy   job_type: CMD 
+box_name: 6nacd1bxd_home_scorecard
+command: $SHRScripts/send_email.sh -s "SUCCESS HOME_SCORECARD" -l $Config/email_list.lst -e $Logs/${Autosys_ErrLog} -m /dev/null
+machine: acepldsdsc01
+owner: pa08042e@a4054ue1plpld01
+permission: 
+date_conditions: 0
+condition: s(6nacd1cmd_home_scorecard_load)
+description: "Home Scorecard Success Notification Job"
+std_out_file: ">> $Logs/perst_ld_out_$TodaysDT_YYYYMMDD.log"
+std_err_file: ">> $Logs/perst_ld_err_$TodaysDT_YYYYMMDD.log"
+alarm_if_fail: 1
+profile: "/tech/appl/default/user/pa08042e/home_scorecard/config/home_sc.profile"
+alarm_if_terminated: 1
+
+/* ----------------- 6nacd1cmd_home_scorecard_fail_ntfy ----------------- */ 
+
+insert_job: 6nacd1cmd_home_scorecard_fail_ntfy   job_type: CMD 
+box_name: 6nacd1bxd_home_scorecard
+command: $SHRScripts/send_email.sh -s "FAILURE HOME_SCORECARD" -l $Config/email_list.lst -e $Logs/${Autosys_ErrLog} -m /dev/null
+machine: acepldsdsc01
+owner: pa08042e@a4054ue1plpld01
+permission: 
+date_conditions: 0
+condition: f(6nacd1cmd_home_scorecard_load)
+description: "Home Scorecard Failure Notification Job"
+std_out_file: ">> $Logs/perst_ld_out_$TodaysDT_YYYYMMDD.log"
+std_err_file: ">> $Logs/perst_ld_err_$TodaysDT_YYYYMMDD.log"
+alarm_if_fail: 1
+profile: "/tech/appl/default/user/pa08042e/home_scorecard/config/home_sc.profile"
+alarm_if_terminated: 1

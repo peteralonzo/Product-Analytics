@@ -1,0 +1,46 @@
+
+/* ----------------- 6nacd1bxd_nowco_script ----------------- */
+
+update_job: 6nacd1bxd_nowco_script   job_type: BOX 
+owner: pa08042e@a4054ue1plpld01
+permission: 
+date_conditions: 1
+days_of_week: mo
+start_times: "07:30"
+box_success: s(6nacd1cmd_nowco_script_load)
+description: "Starting Job for NowCo Renewal Email"
+alarm_if_fail: 1
+alarm_if_terminated: 1
+
+/* ----------------- 6nacd1cmd_nowco_script_load ----------------- */ 
+
+update_job: 6nacd1cmd_nowco_script_load   job_type: CMD 
+box_name: 6nacd1bxd_nowco_script
+command: /export/home/pa08042e/.conda/envs/pa08042_venv/bin/python $Scripts/nowco_excel.py -f ${Autosys_Log}
+machine: acepldsdsc01
+owner: pa08042e@a4054ue1plpld01
+permission: 
+date_conditions: 0
+description: "Creating a NowCo Excel and emailing Sales team"
+std_out_file: ">>$Logs/${Autosys_Log}"
+std_err_file: ">>$Logs/${Autosys_Errlog}"
+alarm_if_fail: 1
+profile: "/tech/appl/default/user/pa08042e/nowco_renewals/config/nowco_setup.profile"
+alarm_if_terminated: 1
+
+/* ----------------- 6nacd1cmd_nowco_script_fail_ntfy ----------------- */ 
+
+update_job: 6nacd1cmd_nowco_script_fail_ntfy   job_type: CMD 
+box_name: 6nacd1bxd_nowco_script
+command: $SHRScripts/send_email.sh -s "FAILURE NOWCO_RENEWALS" -l $Config/email_list.lst -e $Logs/${Autosys_ErrLog} -m /dev/null
+machine: acepldsdsc01
+owner: pa08042e@a4054ue1plpld01
+permission: 
+date_conditions: 0
+condition: f(6nacd1cmd_nowco_script_load)
+description: "NowCo Renewal Script Failure Notification Job"
+std_out_file: ">> $Logs/perst_ld_out_$TodaysDT_YYYYMMDD.log"
+std_err_file: ">> $Logs/perst_ld_err_$TodaysDT_YYYYMMDD.log"
+alarm_if_fail: 1
+profile: "/tech/appl/default/user/pa08042e/nowco_renewals/config/nowco_setup.profile"
+alarm_if_terminated: 1
