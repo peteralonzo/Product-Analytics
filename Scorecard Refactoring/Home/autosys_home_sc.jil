@@ -32,7 +32,7 @@ alarm_if_terminated: 1
 
 update_job: 6nacd1cmd_home_scorecard_succ_ntfy   job_type: CMD 
 box_name: 6nacd1bxd_home_scorecard
-command: $SHRScripts/send_email.sh -s "SUCCESS HOME_SCORECARD" -l $Config/email_list.lst -e $Logs/${Autosys_ErrLog} -m /dev/null
+command: $SHRScripts/send_email.sh -s "SUCCESS HOME_SCORECARD" -l $Config/email_list.lst -e $Logs/${Autosys_Log} -m /dev/null
 machine: acepldsdsc01
 owner: pa08042e@a4054ue1plpld01
 permission: 
