@@ -5,9 +5,9 @@ update_job: 6nacd1bxd_auto_scorecard   job_type: BOX
 owner: pa08042e@a4054ue1plpld01
 permission: 
 date_conditions: 1
-run_calendar: daily
+days_of_week: mo, tu, we, th, fr
 start_times: "06:30"
-box_success: s(6nacd1cmd_auto_scorecard_load)
+box_success: s(6nacd1cmd_auto_scorecard_succ_ntfy)
 description: "Starting Job for Auto Scorecard"
 alarm_if_fail: 1
 alarm_if_terminated: 1

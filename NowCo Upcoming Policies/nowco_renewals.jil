@@ -7,7 +7,7 @@ permission:
 date_conditions: 1
 days_of_week: mo
 start_times: "07:30"
-box_success: s(6nacd1cmd_nowco_script_load)
+box_success: s(6nacd1cmd_nowco_script_succ_ntfy)
 description: "Starting Job for NowCo Renewal Email"
 alarm_if_fail: 1
 alarm_if_terminated: 1
@@ -22,6 +22,23 @@ owner: pa08042e@a4054ue1plpld01
 permission: 
 date_conditions: 0
 description: "Creating a NowCo Excel and emailing Sales team"
+std_out_file: ">>$Logs/${Autosys_Log}"
+std_err_file: ">>$Logs/${Autosys_Errlog}"
+alarm_if_fail: 1
+profile: "/tech/appl/default/user/pa08042e/nowco_renewals/config/nowco_setup.profile"
+alarm_if_terminated: 1
+
+/* ----------------- 6nacd1cmd_nowco_script_succ_ntfy ----------------- */ 
+
+update_job: 6nacd1cmd_nowco_script_succ_ntfy   job_type: CMD 
+box_name: 6nacd1bxd_nowco_script
+command: $SHRScripts/send_email.sh -s "SUCCESS NOWCO_RENEWALS" -l $Config/email_list.lst -e $Logs/${Autosys_Log} -m /dev/null
+machine: acepldsdsc01
+owner: pldsap01dy@acepldsdsc01
+permission: 
+date_conditions: 0
+condition: s(6nacd1cmd_nowco_script_load)
+description: "NowCo Renewal Script Success Notification Job"
 std_out_file: ">>$Logs/${Autosys_Log}"
 std_err_file: ">>$Logs/${Autosys_Errlog}"
 alarm_if_fail: 1

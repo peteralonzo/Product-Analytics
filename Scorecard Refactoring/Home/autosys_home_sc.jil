@@ -1,20 +1,20 @@
 
 /* ----------------- 6nacd1bxd_home_scorecard ----------------- */
 
-insert_job: 6nacd1bxd_home_scorecard   job_type: BOX 
+update_job: 6nacd1bxd_home_scorecard   job_type: BOX 
 owner: pa08042e@a4054ue1plpld01
 permission: 
 date_conditions: 1
-run_calendar: daily
+days_of_week: mo, tu, we, th, fr
 start_times: "06:30"
-box_success: s(6nacd1cmd_home_scorecard_load)
+box_success: s(6nacd1cmd_home_scorecard_succ_ntfy)
 description: "Starting Job for Home Scorecard"
 alarm_if_fail: 1
 alarm_if_terminated: 1
 
 /* ----------------- 6nacd1cmd_home_scorecard_load ----------------- */ 
 
-insert_job: 6nacd1cmd_home_scorecard_load   job_type: CMD 
+update_job: 6nacd1cmd_home_scorecard_load   job_type: CMD 
 box_name: 6nacd1bxd_home_scorecard
 command: /export/home/pa08042e/.conda/envs/pa08042_venv/bin/python $Scripts/home_scorecard.py -f ${Autosys_Log}
 machine: acepldsdsc01
@@ -30,7 +30,7 @@ alarm_if_terminated: 1
 
 /* ----------------- 6nacd1cmd_home_scorecard_succ_ntfy ----------------- */ 
 
-insert_job: 6nacd1cmd_home_scorecard_succ_ntfy   job_type: CMD 
+update_job: 6nacd1cmd_home_scorecard_succ_ntfy   job_type: CMD 
 box_name: 6nacd1bxd_home_scorecard
 command: $SHRScripts/send_email.sh -s "SUCCESS HOME_SCORECARD" -l $Config/email_list.lst -e $Logs/${Autosys_ErrLog} -m /dev/null
 machine: acepldsdsc01
@@ -47,7 +47,7 @@ alarm_if_terminated: 1
 
 /* ----------------- 6nacd1cmd_home_scorecard_fail_ntfy ----------------- */ 
 
-insert_job: 6nacd1cmd_home_scorecard_fail_ntfy   job_type: CMD 
+update_job: 6nacd1cmd_home_scorecard_fail_ntfy   job_type: CMD 
 box_name: 6nacd1bxd_home_scorecard
 command: $SHRScripts/send_email.sh -s "FAILURE HOME_SCORECARD" -l $Config/email_list.lst -e $Logs/${Autosys_ErrLog} -m /dev/null
 machine: acepldsdsc01
