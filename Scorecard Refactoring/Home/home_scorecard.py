@@ -133,6 +133,12 @@ with open('/tech/appl/default/user/pa08042e/home_scorecard/queries/Query #5- Hom
 
 with open('/tech/appl/default/user/pa08042e/home_scorecard/queries/Query #6- Home.sql', 'r') as query6:
     query_6 = "CREATE OR REPLACE TRANSIENT TABLE DSC_PLBI_DB.APP_HOME_DEV.SCORECARD_NEW_FUNNEL AS \n" + query6.read()
+
+with open('/tech/appl/default/user/pa08042e/home_scorecard/queries/Query #7- Home.sql', 'r') as query7:
+    query_7 = "CREATE OR REPLACE TRANSIENT TABLE DSC_PLBI_DB.APP_HOME_DEV.SCORECARD_HOME_SEG_CW_NEWCO AS \n" + query7.read()
+
+with open('/tech/appl/default/user/pa08042e/home_scorecard/queries/Query #8- Home.sql', 'r') as query8:
+    query_8 = "CREATE OR REPLACE TRANSIENT TABLE DSC_PLBI_DB.APP_HOME_DEV.SCORECARD_HOME_SEG_CW_NOWCO AS \n" + query8.read()
     
 cs = ctx.cursor()
 try:
@@ -142,6 +148,8 @@ try:
     cs.execute(query_4)
     cs.execute(query_5)
     cs.execute(query_6)
+    cs.execute(query_7)
+    cs.execute(query_8)
 finally:
     cs.close()
 ctx.close()

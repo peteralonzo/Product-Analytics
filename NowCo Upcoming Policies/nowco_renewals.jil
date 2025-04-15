@@ -6,7 +6,7 @@ owner: pa08042e@a4054ue1plpld01
 permission: 
 date_conditions: 1
 days_of_week: mo
-start_times: "07:30"
+start_times: "13:00"
 box_success: s(6nacd1cmd_nowco_script_succ_ntfy)
 description: "Starting Job for NowCo Renewal Email"
 alarm_if_fail: 1

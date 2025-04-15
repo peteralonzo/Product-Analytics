@@ -41,11 +41,6 @@ start_date = '\'' + (date.today() + timedelta(days=42)).strftime('%Y-%m-%d') + '
 end_date = '\'' + (date.today() + timedelta(days=48)).strftime('%Y-%m-%d') + '\''
 billing_date = '\'' + (date.today() - timedelta(days=9)).strftime('%Y-%m-%d') + '\''
 
-# # For one-time run
-# start_date = '\'2025-04-14\''
-# end_date = '\'2025-05-18\''
-# billing_date = '\'2025-02-22\''
-
 query = f"""
 SELECT POLICY_ID, TO_DATE(CAST(POL_EFF_DT AS VARCHAR),'YYYYMMDD') AS POL_EFF_DT,
 STATE_ABBR, BUS_UNIT_ABBR, ACCT_CR_IND, HH_COMP, INS_SCORE_GRP, INSURED_AGE, 
@@ -90,7 +85,6 @@ ctx.close()
 import openpyxl
 formatted_date = date.today().strftime("%m%d%y")
 excel_filename = f'NowCo_Auto_Upcoming_Renewals_{formatted_date}.xlsx'
-# excel_filename = f'NowCo_Auto_Upcoming_Renewals_0414_to_0518.xlsx'
 df.to_excel(excel_filename, index=False)
 wb = openpyxl.load_workbook(excel_filename)
 ws = wb["Sheet1"]
@@ -138,6 +132,7 @@ html = f"""\
     <p>PREV_TERM_LATEST_PREMIUM >= 300</p>
     <br>
     <p>Note: Eligible policyholders who made a down payment for their upcoming NowCo renewal on or after {formatted_billing} have been excluded</p>
+    <p>Note: Agency policies have also been excluded</p>
     <br>
     <p>If you wish to make edits to the applied filters, add someone or remove yourself from the automatic email system, or have any clarifying questions,</p>
     <p>please reach out to Peter Alonzo or Kevin Bodie directly via email or Teams.</p>
