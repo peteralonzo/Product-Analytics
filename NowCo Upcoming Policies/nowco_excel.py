@@ -84,9 +84,13 @@ ctx.close()
 
 import openpyxl
 formatted_date = date.today().strftime("%m%d%y")
+directory = f'/tech/appl/default/user/pa08042e/nowco_renewals/output/{date.today().strftime("%Y-%m-%d")}/'
+os.makedirs(directory, exist_ok=True)
+
+
 excel_filename = f'NowCo_Auto_Upcoming_Renewals_{formatted_date}.xlsx'
-df.to_excel(excel_filename, index=False)
-wb = openpyxl.load_workbook(excel_filename)
+df.to_excel(os.path.join(directory, excel_filename), index=False)
+wb = openpyxl.load_workbook(os.path.join(directory, excel_filename))
 ws = wb["Sheet1"]
 
 # Iterate through all columns in the worksheet, use the column_dimensions property to get the column object, and set the auto_size attribute to True for automatic column width adjustment
@@ -94,7 +98,7 @@ for col in ws.columns:
     ws.column_dimensions[col[0].column_letter].auto_size = True
 
 # Use the save method to save the modified Excel file
-wb.save(excel_filename)
+wb.save(os.path.join(directory, excel_filename))
 
 import smtplib
 from email.mime.text import MIMEText
@@ -107,58 +111,73 @@ formatted_start = start_date[6:8] + "/" + start_date[9:11] + "/" + start_date[1:
 formatted_end = end_date[6:8] + "/" + end_date[9:11] + "/" + end_date[1:5]
 formatted_billing = billing_date[6:8] + "/" + billing_date[9:11] + "/" + billing_date[1:5]
 
-# Create the root message and fill in the from, to, and subject headers
-msg = MIMEMultipart('related')
-msg['Subject'] = f'NowCo Auto Upcoming Renewals: {formatted_start} - {formatted_end}'
-msg['From'] = 'ProductAnalytics'
-msg['To'] = 'peter.alonzo@thehartford.com'
-msg['X-MSMail-Priority'] = 'High'
+# Configure logging
+logging_directory = f'/tech/appl/default/user/pa08042e/nowco_renewals/emails/{date.today().strftime("%Y-%m-%d")}/'
+os.makedirs(logging_directory, exist_ok=True)
 
-# Create the body with HTML
-html = f"""\
-<html>
-  <body>
-    <p>Please see the attached Excel file containing upcoming NowCo Auto Renewals.</p>
-    <p>The following filters are being applied:</p>
-    <br>
-    <p>POL_EFF_DT: {formatted_start} to {formatted_end}</p>
-    <p>POL_NEW_RNW_CD = R</p>
-    <p>STATE_ABBR IN [ak,al,ar,az,co,ct,dc,de,fl,ga,ia,id,il,in,ks,ky,la,md,me,mi,mn,mo,ms,mt,nd,ne,nh,nj,nm,oh,ok,or,pa,ri,sc,sd,tn,tx,ut,va,vt,wi,wv,wy,null]</p>
-    <p>OFFERED_PREMIUM_CHANGE >= 0.4</p>
-    <p>POL_LATST_INCID_MO_AGE_GRP IN [0,13-24,25-36,37,38-60,61,null]</p>
-    <p>FLAT_CANCEL_FLAG = 0</p>
-    <p>BUS_UNIT_ABBR <> AGCY</p>
-    <p>ACCT_CR_IND = 1</p>
-    <p>PREV_TERM_LATEST_PREMIUM >= 300</p>
-    <br>
-    <p>Note: Eligible policyholders who made a down payment for their upcoming NowCo renewal on or after {formatted_billing} have been excluded</p>
-    <p>Note: Agency policies have also been excluded</p>
-    <br>
-    <p>If you wish to make edits to the applied filters, add someone or remove yourself from the automatic email system, or have any clarifying questions,</p>
-    <p>please reach out to Peter Alonzo or Kevin Bodie directly via email or Teams.</p>
-  </body>
-</html>
-"""
-
-part1 = MIMEText(html, 'html')
-msg.attach(part1)
-
-with open(excel_filename, 'rb') as attachment:
-    part = MIMEBase('application', 'octet-stream')
-    part.set_payload(attachment.read())
-    encoders.encode_base64(part)
-    part.add_header(
-        'Content-Disposition',
-        f'attachment; filename= {excel_filename}',
-    )
-    msg.attach(part)
-
-email_list = ['peter.alonzo@thehartford.com', 'kevin.bodie@thehartford.com', 'caitlin.hart@thehartford.com',
-              'jonathan.stahl@thehartford.com', 'todd.bertsch@thehartford.com', 'ashley.martin@thehartford.com',
+email_list = ['caitlin.hart@thehartford.com', 'jonathan.stahl@thehartford.com', 'todd.bertsch@thehartford.com',
+               'ashley.martin@thehartford.com', 'timothy.carrier@thehartford.com',
               'james.capece@thehartford.com', 'jennifer.crawford1@thehartford.com', 'patricia.kovarik@thehartford.com',
-              'melissa.huelsman@thehartford.com']
+              'melissa.huelsman@thehartford.com', 'kevin.bodie@thehartford.com', 'peter.alonzo@thehartford.com']
 
-# Send the message via our own SMTP server, but don't include the envelope header
+success_list, fail_list = [], []
+              
+# Send the email to each recipient individually
 s = smtplib.SMTP('localhost')
-s.sendmail('DoNotReply', email_list, msg.as_string())
+for recipient in email_list:
+    try:
+        msg = MIMEMultipart('related')
+        msg['Subject'] = f'NowCo Auto Upcoming Renewals: {formatted_start} - {formatted_end}'
+        msg['From'] = 'ProductAnalytics'
+        msg['To'] = recipient
+        msg['X-MSMail-Priority'] = 'High'
+
+        # Create the body with HTML
+        html = f"""\
+        <html>
+          <body>
+            <p>Please see the attached Excel file containing upcoming NowCo Auto Renewals.</p>
+            <p>The following filters are being applied:</p>
+            <br>
+            <p>POL_EFF_DT: {formatted_start} to {formatted_end}</p>
+            <p>POL_NEW_RNW_CD = R</p>
+            <p>STATE_ABBR IN [ak,al,ar,az,co,ct,dc,de,fl,ga,ia,id,il,in,ks,ky,la,md,me,mi,mn,mo,ms,mt,nd,ne,nh,nj,nm,oh,ok,or,pa,ri,sc,sd,tn,tx,ut,va,vt,wi,wv,wy,null]</p>
+            <p>OFFERED_PREMIUM_CHANGE >= 0.4</p>
+            <p>POL_LATST_INCID_MO_AGE_GRP IN [0,13-24,25-36,37,38-60,61,null]</p>
+            <p>FLAT_CANCEL_FLAG = 0</p>
+            <p>BUS_UNIT_ABBR <> AGCY</p>
+            <p>ACCT_CR_IND = 1</p>
+            <p>PREV_TERM_LATEST_PREMIUM >= 300</p>
+            <br>
+            <p>Note: Eligible policyholders who made a down payment for their upcoming NowCo renewal on or after {formatted_billing} have been excluded</p>
+            <br>
+            <p>If you wish to make edits to the applied filters, add someone or remove yourself from the automatic email system, or have any clarifying questions,</p>
+            <p>please reach out to Peter Alonzo or Kevin Bodie directly via email or Teams.</p>
+          </body>
+        </html>
+        """
+
+        part1 = MIMEText(html, 'html')
+        msg.attach(part1)
+
+        with open(os.path.join(directory, excel_filename), 'rb') as attachment:
+            part = MIMEBase('application', 'octet-stream')
+            part.set_payload(attachment.read())
+            encoders.encode_base64(part)
+            part.add_header(
+                'Content-Disposition',
+                f'attachment; filename= {excel_filename}',
+            )
+            msg.attach(part)
+        s.sendmail('DoNotReply', recipient, msg.as_string())
+        success_list.append(recipient)
+    except Exception as e:
+        fail_list.append(recipient)
 s.quit()
+
+log_filename = os.path.join(logging_directory, 'email_log.txt')
+with open(log_filename, 'w') as log_file:
+    log_file.write("Successfully sent emails to:\n")
+    log_file.write("\n".join(success_list))
+    log_file.write("\n\nFailed to send emails to:\n")
+    log_file.write("\n".join(fail_list))

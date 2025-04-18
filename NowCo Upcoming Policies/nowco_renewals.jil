@@ -34,7 +34,7 @@ update_job: 6nacd1cmd_nowco_script_succ_ntfy   job_type: CMD
 box_name: 6nacd1bxd_nowco_script
 command: $SHRScripts/send_email.sh -s "SUCCESS NOWCO_RENEWALS" -l $Config/email_list.lst -e $Logs/${Autosys_Log} -m /dev/null
 machine: acepldsdsc01
-owner: pldsap01dy@acepldsdsc01
+owner: pa08042e@a4054ue1plpld01
 permission: 
 date_conditions: 0
 condition: s(6nacd1cmd_nowco_script_load)
