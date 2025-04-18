@@ -197,4 +197,20 @@ try:
     cs.execute(query_9)
 finally:
     cs.close()
+
+
+############################################ Validation Check ############################################
+query_dict = {'SCORECARD_AUTO_FLOW': query_1, 'SCORECARD_AUTO_SEG_STATE': query_2, 'SCORECARD_AUTO_PERSISTENCY_EXCEL': query_3,
+              'SCORECARD_AUTO_SEG_CW': query_4, 'SCORECARD_AUTO_SEG_NOWCO': query_5, 'SCORECARD_NEW_FUNNEL': query_6,
+              'SCORECARD_FUNNEL_DETAIL': query_7, 'SCORECARD_INFORCE_SEGMENTATION': query_8, 'SCORECARD_GRID_EXCEL': query_9}
+
+cs = ctx.cursor()
+try:
+    for table, query_file in query_dict.items():
+        cs.execute(f'SELECT COUNT(*) FROM DSC_PLBI_DB.APP_AUTO_DEV.{table}')
+        row_cnt = cs.fetchone()[0]
+        if row_cnt <= 1:
+            cs.execute(query_file)
+finally:
+    cs.close()
 ctx.close()

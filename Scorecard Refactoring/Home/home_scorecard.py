@@ -152,5 +152,19 @@ try:
     cs.execute(query_8)
 finally:
     cs.close()
+
+############################################ Validation Check ############################################
+query_dict = {'SCORECARD_HOME_FLOW_EXCEL': query_1, 'SCORECARD_HOME_PERSISTENCY_EXCEL': query_2, 'SCORECARD_HOME_SEG_NEWCO': query_3,
+              'SCORECARD_HOME_INFORCE_EXCEL': query_4, 'SCORECARD_HOME_SEG_NOWCO': query_5, 'SCORECARD_NEW_FUNNEL': query_6,
+              'SCORECARD_HOME_SEG_CW_NEWCO': query_7, 'SCORECARD_HOME_SEG_CW_NOWCO': query_8}
+
+cs = ctx.cursor()
+try:
+    for table, query_file in query_dict.items():
+        cs.execute(f'SELECT COUNT(*) FROM DSC_PLBI_DB.APP_HOME_DEV.{table}')
+        row_cnt = cs.fetchone()[0]
+        if row_cnt <= 1:
+            cs.execute(query_file)
+finally:
+    cs.close()
 ctx.close()
-print('Done')
