@@ -1,0 +1,48 @@
+SELECT 
+    MAX(CNTYNAM) AS "County Name",
+    SUBSTR(EASIBLOCK, 1, 5) as "County ID",
+    SUM(SQMILES) AS "Square Miles", 
+    SUM(DIV0NULL(POP19, SQMILES)) AS "Population Density", 
+    SUM(POP19) AS "Population", 
+    AVG(avghhsize) AS "Average Household Size", 
+    SUM(URBANPOP) AS "Urban Population", 
+    SUM(RURALPOP) AS "Rural Population", 
+    SUM(MALEPOP) AS "Male Population", 
+    SUM(FEMALEPOP) AS "Female Population", 
+    SUM(POP_18_24) AS "Population Aged 18 to 24", 
+    SUM(POP_25_34) AS "Population Aged 25 to 34", 
+    SUM(POP_35_44) AS "Population Aged 35 to 44", 
+    SUM(POP_45_54) AS "Population Aged 45 to 54", 
+    SUM(POP_55_64) AS "Population Aged 55 to 64", 
+    SUM(POP_65_74) AS "Population Aged 65 to 74", 
+    SUM(POP_75_84) AS "Population Aged 75 to 84", 
+    SUM(POP_85P) AS "Population Aged 85 Years and Over", 
+    SUM(HHL24YR) AS "Householder Aged Under 25 Years", 
+    SUM(HH25_34YR) AS "Householder Aged 25 to 34 Years", 
+    SUM(HH35_44YR) AS "Householder Aged 35 to 44 Years", 
+    SUM(HH45_54YR) AS "Householder Aged 45 to 54 Years", 
+    SUM(HH55_64YR) AS "Householder Aged 55 to 64 Years", 
+    SUM(HH65_74YR) AS "Householder Aged 65 to 74 Years", 
+    SUM(HH75_84YR) AS "Householder Aged 75 to 84 Years", 
+    SUM(HH85PYR) AS "Householder Aged 85 Years and Over", 
+    MEDIAN(MEDHHINC) AS "Householder Income Median", 
+    SUM(ED_DOCT) AS "Education Attainment Doctorate Degree", 
+    SUM(ED_PROF) AS "Education Attainment Professional Degree", 
+    SUM(ED_MAST) AS "Education Attainment Masters Degree", 
+    SUM(ED_BACH) AS "Education Attainment Bachelors Degree", 
+    SUM(ED_ASSC) AS "Education Attainment Associates Degree", 
+    SUM(ED_COL) AS "Education Attainment Some College", 
+    SUM(POPFORE24) AS "Population Forecast 20242019", 
+    SUM(HHGROW19) AS "Household Growth 20192010", 
+    SUM(HHFORE24) AS "Household Forecast 20242019", 
+    SUM(VACUNIT) AS "Housing Vacant Units", 
+    SUM(OOCCHH) AS "Housing Owner Occupied", 
+    SUM(ROCCHH) AS "Housing Renter Occupied", 
+    SUM(MEDRENT) AS "Housing Median Rent", 
+    SUM(MEDVALOCC) AS "Housing Median Value Owner Households"
+FROM 
+    "PRD_3PD_DB"."SRC_EASI"."2019_D5_DEMS2010"
+GROUP BY 
+    SUBSTR(EASIBLOCK, 1, 5)
+ORDER BY
+    SUBSTR(EASIBLOCK, 1, 5);

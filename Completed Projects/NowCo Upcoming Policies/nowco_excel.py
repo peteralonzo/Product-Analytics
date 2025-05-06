@@ -69,7 +69,7 @@ AND (STATE_ABBR IS NULL OR LOWER(STATE_ABBR) IN (
       'va', 'vt', 'wi', 'wv', 'wy'))
 AND (POL_LATST_INCID_MO_AGE_GRP IS NULL OR LOWER(POL_LATST_INCID_MO_AGE_GRP) IN ('0', '13-24', '25-36', '37', '38-60', '61'))
 AND FLAT_CANCEL_FLAG = 0
-AND OFFERED_PREMIUM_CHANGE >= 0.4
+AND OFFERED_PREMIUM_CHANGE >= 0.3
 ORDER BY POL_EFF_DT;
 """
 
@@ -116,7 +116,7 @@ logging_directory = f'/tech/appl/default/user/pa08042e/nowco_renewals/emails/{da
 os.makedirs(logging_directory, exist_ok=True)
 
 email_list = ['caitlin.hart@thehartford.com', 'jonathan.stahl@thehartford.com', 'todd.bertsch@thehartford.com',
-               'ashley.martin@thehartford.com', 'timothy.carrier@thehartford.com',
+               'ashley.martin@thehartford.com',
               'james.capece@thehartford.com', 'jennifer.crawford1@thehartford.com', 'patricia.kovarik@thehartford.com',
               'melissa.huelsman@thehartford.com', 'kevin.bodie@thehartford.com', 'peter.alonzo@thehartford.com']
 
@@ -142,7 +142,7 @@ for recipient in email_list:
             <p>POL_EFF_DT: {formatted_start} to {formatted_end}</p>
             <p>POL_NEW_RNW_CD = R</p>
             <p>STATE_ABBR IN [ak,al,ar,az,co,ct,dc,de,fl,ga,ia,id,il,in,ks,ky,la,md,me,mi,mn,mo,ms,mt,nd,ne,nh,nj,nm,oh,ok,or,pa,ri,sc,sd,tn,tx,ut,va,vt,wi,wv,wy,null]</p>
-            <p>OFFERED_PREMIUM_CHANGE >= 0.4</p>
+            <p>OFFERED_PREMIUM_CHANGE >= 0.3</p>
             <p>POL_LATST_INCID_MO_AGE_GRP IN [0,13-24,25-36,37,38-60,61,null]</p>
             <p>FLAT_CANCEL_FLAG = 0</p>
             <p>BUS_UNIT_ABBR <> AGCY</p>
